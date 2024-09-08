@@ -1,9 +1,9 @@
+import AppLayout from "@/features/home/layout/app-layout";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomeRoute from "./home";
+import LoginRoute from "./login";
 import ProfileRoute from "./profile";
 import RegisterRoute from "./register";
-import LoginRoute from "./login";
-import LeftBar from "@/features/home/component/left-bar";
 
 
 export function AppRouter() {
@@ -26,7 +26,7 @@ export function AppRouter() {
         },
         {
             path: "/test",
-            element: <LeftBar />,
+            element: <AppLayout />,
         },
     ])
 

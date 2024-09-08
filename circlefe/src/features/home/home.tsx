@@ -12,8 +12,7 @@ export function Home() {
                     payload: {
                         id: 1,
                         email: "test@gmail.com",
-                        name: "test",
-                        username: "test",
+                        fullname: "test",
                     }
                 })
             }}>isi data user</button>

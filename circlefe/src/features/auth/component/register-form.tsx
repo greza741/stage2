@@ -3,6 +3,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Form, Link as ReactRouterLink } from "react-router-dom";
 import { RegisterFormInputs, registerSchema } from "../schemas/register";
+import { useAppDispatch, useAppSelector } from "@/hooks/use-store";
+import { setUser } from "@/store/auth-slice";
 
 
 
@@ -15,21 +17,24 @@ export function RegisterForm() {
         resolver: zodResolver(registerSchema)
     })
 
-    const test = new Promise((resolve) => {
-        setTimeout(() => {
-            resolve("OK");
-        }, 1000);
-    });
+    const user = useAppSelector((state) => state.auth)
+    const dispatch = useAppDispatch();
 
-    async function onSubmit(data: RegisterFormInputs) {
-        const response = await test;
-        console.log(response);
-        console.log(data);
+    async function onSubmit({ email, fullname }: RegisterFormInputs) {
+        dispatch(
+            setUser({
+                id: 1,
+                email: email,
+                fullname: fullname,
+            })
+        )
     }
+
 
 
     return (
         <Box >
+            <Text>{JSON.stringify(user)}</Text>
             <Text fontSize={`300%`} color={`brand.green`}>Circle</Text>
             <Text fontSize={`200%`}>Login Account Circle</Text>
             <Form onSubmit={handleSubmit(onSubmit)}>

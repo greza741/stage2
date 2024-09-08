@@ -3,10 +3,15 @@ import { Box } from "@chakra-ui/react";
 
 export default function LoginRoute() {
     return (
-        <Box>
+        <Box
+            backgroundColor={"brand.background"}
+            backgroundSize={"cover"}
+            minHeight={"100vh"}
+        >
             <Box
                 display={"flex"}
-                justifyContent={"center"}>
+                justifyContent={"center"}
+                color={"white"}>
                 <LoginForm />
             </Box>
         </Box>

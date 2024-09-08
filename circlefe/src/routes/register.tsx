@@ -3,10 +3,16 @@ import { Box } from "@chakra-ui/react";
 
 export default function RegisterRoute() {
     return (
-        <Box>
+        <Box
+            backgroundColor={"brand.background"}
+            backgroundSize={"cover"}
+            minHeight={"100vh"}
+        >
             <Box
                 display="flex"
-                justifyContent="center">
+                justifyContent="center"
+                color={"white"}
+            >
                 <RegisterForm />
             </Box>
         </Box>
