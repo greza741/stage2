@@ -38,10 +38,11 @@ export default function LeftBar() {
 
     >
       <Flex
-        h="20"
+        
+        display={"flex"}
         alignItems="center"
-        // mx="100"
-        justifyContent="space-between"
+        paddingLeft={"11%"}
+        
       >
         <Text fontSize="300%" fontWeight="bold" color={"brand.green"}>
           circle
