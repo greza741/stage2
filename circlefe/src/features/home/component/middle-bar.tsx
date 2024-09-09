@@ -8,12 +8,11 @@ export function MiddleBar() {
             <Box backgroundColor={"brand.background"}
                 color={"white"}
                 minHeight={"100vh"}
-                borderRight={"1px solid grey"}>
+                borderRight={"1px solid grey"}
+                padding={"0px 20px"}>
                 <Flex h="20"
-                    alignItems="center"
-                    mx="10"
-                    backgroundColor={""}>
-                    <InputGroup width={"1000px"} borderRadius={"20px"} >
+                    alignItems="center">
+                    <InputGroup  borderRadius={"20px"} >
                         <InputLeftAddon borderLeftRadius={"20px"} backgroundColor={"#3F3F3F"} ><RiUserSearchFill /></InputLeftAddon>
                         <Input borderRightRadius={"20px"} backgroundColor={"#3F3F3F"} type='search' placeholder='Search' />
                     </InputGroup>

@@ -6,13 +6,13 @@ import { RightBar } from "../component/right-bar";
 export default function AppLayout() {
     return (
         <Box display={"flex"} flexDirection={"row"} >
-            <Box flex={"1"}>
+            <Box flex={"2"}>
                 <LeftBar />
             </Box>
-            <Box flex={"1"}>
+            <Box flex={"5"}>
                 <MiddleBar />
             </Box>
-            <Box flex={"1"}>
+            <Box flex={"3"}>
                 <RightBar />
             </Box>
         </Box>

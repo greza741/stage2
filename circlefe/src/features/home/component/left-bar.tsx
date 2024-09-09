@@ -40,7 +40,7 @@ export default function LeftBar() {
       <Flex
         h="20"
         alignItems="center"
-        mx="100"
+        // mx="100"
         justifyContent="space-between"
       >
         <Text fontSize="300%" fontWeight="bold" color={"brand.green"}>
@@ -63,7 +63,7 @@ export default function LeftBar() {
       <Flex
         position="absolute"
         bottom="20px"
-        mx={"100"}
+        mx={"50"}
         align={"center"}
       >
         <Icon as={SlLogout} mr={"2"} fontSize={"20px"} />
