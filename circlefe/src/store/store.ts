@@ -1,11 +1,18 @@
-import { configureStore } from "@reduxjs/toolkit"
-import authReducer from "./auth-slice"
+import { User } from "@/types/user"
+import { create } from "zustand"
+import { devtools } from "zustand/middleware";
 
-export const store = configureStore({
-    reducer: {
-        auth: authReducer
-    }
-})
+type UseAuthStore = { currentUser: User } & {
+    setUser: (user: User) => void;
+}
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export const useAuthStore = create<UseAuthStore>()(
+    devtools((set) => ({
+        currentUser: {
+            id: 0,
+            email: "",
+            fullname: "",
+        },
+        setUser: (currentUser) => set((state) => ({ ...state, currentUser }))
+    }))
+)
