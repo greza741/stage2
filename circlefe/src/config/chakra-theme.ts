@@ -5,6 +5,7 @@ const themeConfig: ThemeOverride = {
         brand: {
             green: "#04A51E",
             background: "#1D1D1D",
+            background2: "#262626",
             "green-disabled": "#005E0E",
         },
     },

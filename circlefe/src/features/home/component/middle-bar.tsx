@@ -1,4 +1,4 @@
-import { Box, Flex, Input, InputGroup, InputLeftAddon } from "@chakra-ui/react";
+import { Box, Flex, Input, InputGroup, InputLeftAddon, Text } from "@chakra-ui/react";
 import { RiUserSearchFill } from "react-icons/ri";
 
 
@@ -18,6 +18,9 @@ export function MiddleBar() {
                     </InputGroup>
 
                 </Flex>
+                    <Text>
+                        
+                    </Text>
             </Box>
         </Box>
     )
