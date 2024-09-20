@@ -10,9 +10,7 @@ import React from 'react'
 import { IconType } from 'react-icons'
 import { CgProfile } from "react-icons/cg"
 import { CiHeart } from "react-icons/ci"
-import {
-  FiHome
-} from 'react-icons/fi'
+import {FiHome} from 'react-icons/fi'
 import { RiUserSearchLine } from "react-icons/ri"
 import { SlLogout } from "react-icons/sl";
 
