@@ -2,7 +2,7 @@ import { Box, Flex, Input, InputGroup, InputLeftAddon, Text } from "@chakra-ui/r
 import { RiUserSearchFill } from "react-icons/ri";
 
 
-export function MiddleBar() {
+export function MiddleBarSearch() {
     return (
         <Box>
             <Box backgroundColor={"brand.background"}

@@ -34,7 +34,7 @@ class UserServices {
     
     async createUser(data : CreateUserDTO): Promise<User | null> {
         return await prisma.user.create({data})
-    }
+    }      
     
     async updateUser(data : UpdateUserDTO): Promise<User | null> {
         const user = await prisma.user.findUnique({

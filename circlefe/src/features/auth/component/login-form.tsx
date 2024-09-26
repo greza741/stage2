@@ -1,28 +1,28 @@
 import { useLoginForm } from "@/features/hooks/use-login"
 import { Box, Button, Input, Text, Link as ChakraLink } from "@chakra-ui/react"
-import { Link as ReactRouterLink } from "react-router-dom"
+import { Form, Link as ReactRouterLink } from "react-router-dom"
 
 
 
 export function LoginForm() {
-    const { handleChange, handleSumbit } = useLoginForm()
-
-
+    const { register, onSubmit, handleSubmit} = useLoginForm()
 
     return (
         <Box >
             <Text fontSize={`300%`} color={`brand.green`}>Circle</Text>
             <Text fontSize={`200%`}>Login Account Circle</Text>
+            <Form onSubmit={handleSubmit(onSubmit)}>
             <Box
                 display="flex"
                 flexDirection="column"
                 gap="10px"
                 width="300px"
             >
-                <Input onChange={handleChange} name="email" type="email" placeholder="Email" />
-                <Input onChange={handleChange} name="password" type="password" placeholder="Password" />
+                <Input {...register("email")} type="email" placeholder="Email" />
+                <Input {...register("password")} type="password" placeholder="Password" />
+
                 <Button
-                    onClick={handleSumbit}
+                    type="submit"
                     backgroundColor="brand.green"
                     padding="20px"
                     color="white"
@@ -34,6 +34,7 @@ export function LoginForm() {
                     </ChakraLink>
                 </Text>
             </Box>
+                </Form>
         </Box >
     )
 }

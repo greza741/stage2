@@ -1,13 +1,13 @@
 import { Box } from "@chakra-ui/react";
-import LeftBar from "../component/left-bar";
-import { MiddleBar } from "../component/middle-bar";
-import { RightBar } from "../component/right-bar";
-import 'overlayscrollbars/overlayscrollbars.css';
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
-import "./css/scrollbar.css"
+import 'overlayscrollbars/overlayscrollbars.css';
+import LeftBar from "../component/left-bar";
+import { MiddleBarSearch } from "../component/middle-bar-search";
+import { RightBar } from "../component/right-bar";
+import "./css/scrollbar.css";
 
 
-export default function AppLayout() {
+export function AppLayoutSearch() {
     return (
         <Box display={"flex"} flexDirection={"row"} >
             <Box flex={"2"}>
@@ -21,7 +21,7 @@ export default function AppLayout() {
                 style={{height:`100%`}}
                 className="os-theme-dark"
                 defer >
-                <MiddleBar />
+                <MiddleBarSearch />
                 </OverlayScrollbarsComponent>
             </Box>
             <Box flex={"3"} >

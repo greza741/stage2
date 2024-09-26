@@ -1,12 +1,9 @@
-import { Profile } from "@/features/home/profile";
-import { Box } from "@chakra-ui/react";
+import { AppLayoutProfile } from "@/features/home/layout/app-layout-profile";
 
 export default function ProfileRoute() {
     return (
-        <Box>
-
-            <Profile />
-
-        </Box>
+        <>
+        <AppLayoutProfile/>
+        </>
     )
 }

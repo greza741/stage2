@@ -42,15 +42,17 @@ class AuthService {
         }
     } 
 
-    async register(data : RegisterDTO): Promise<User | null> {
+    async register(data : RegisterDTO): Promise<Omit<User, "password"> | null> {
         const salt = 10
         const hashedPassword = await bcrypt.hash(data.password, salt)
 
-        return await prisma.user.create({
-            data :{
+        const {password, ...result} = await prisma.user.create({
+            data: {
             ...data,
             password: hashedPassword,
         }})
+        
+        return result
     }
    
 }

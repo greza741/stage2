@@ -1,17 +1,14 @@
-import { useAppSelector } from "@/hooks/use-store";
 import {
   Box,
   Button,
   Flex,
-  Heading,
   Image,
   Stack,
-  Text,
+  Text
 } from "@chakra-ui/react";
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 
-export function RightBar() {
-  const {fullname, email} = useAppSelector((state) => state.auth)
+export function RightBarProfile() {
   return (
     <Box
       py={2}
@@ -21,81 +18,7 @@ export function RightBar() {
       flexDirection={`column`}
     >
       <Box width={`100%`} height={`10%`}>
-        <Box
-          margin={"2px 20px"}
-          bg={"brand.background2"}
-          boxShadow={"2xl"}
-          borderRadius={`20px`}
-          overflow={"hidden"}
-          color={`white`}
-          padding={`2px 20px`}
-        >
-          <Box padding={`10px 0px`}>
-            <Text>My Profile</Text>
-          </Box>
-          <Image
-            paddingBottom={`10px`}
-            h={"80px"}
-            w={"full"}
-            src={
-              "https://images.unsplash.com/photo-1612865547334-09cb8cb455da?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
-            }
-            objectFit="cover"
-            alt="#"
-          />
-          <Flex paddingStart={`3%`} mt={-12} justifyContent={`start`}>
-            <Box
-              borderRadius="full"
-              overflow="hidden"
-              width="70px" // sesuaikan dengan ukuran yang diinginkan
-              height="70px" // sesuaikan dengan ukuran yang diinginkan
-            >
-              <Image
-                src="https://heavyocity.com/wp-content/uploads/2021/08/FA_JRR_Feature_Color.jpg" // ganti dengan URL foto profilmu
-                alt="Profile Picture"
-                objectFit="cover"
-                width="100%"
-                height="100%"
-              />
-            </Box>
-          </Flex>
-          <Box display={`flex`} justifyContent={`end`} mt={`-7`}>
-            <Button
-              fontSize={`12`}
-              boxSize={`1px 1px`}
-              border={`1px solid white`}
-              backgroundColor={`brand.background2`}
-              color={"white"}
-              borderRadius={`20px`}
-              _hover={{
-                transform: "translateY(-4px)",
-                boxShadow: "lg",
-              }}
-            >
-              Edit Profile
-            </Button>
-          </Box>
-          <Box p={`20px 0px`}>
-            <Stack spacing={0} align={"start"}>
-              <Heading fontSize={"2xl"} fontWeight={1000} fontFamily={"body"}>
-                {fullname}
-              </Heading>
-              <Text fontSize={`small`}>{email}</Text>
-              <Text>Heal the world!</Text>
-            </Stack>
-
-            <Stack direction={"row"} justify={"start"} spacing={2}>
-              <Stack direction={`row`}>
-                <Text fontWeight={1000}>23k </Text>
-                <Text fontWeight={1}>Followers</Text>
-              </Stack>
-              <Stack direction={`row`}>
-                <Text fontWeight={1000}>23k </Text>
-                <Text fontWeight={1}>Following</Text>
-              </Stack>
-            </Stack>
-          </Box>
-        </Box>
+        
         <Box
           margin={"10px 20px"}
           bg={"brand.background2"}

@@ -1,25 +1,64 @@
-import { useState } from "react";
-import { RegisterForm } from "../auth/types";
+import { useAppDispatch } from "@/hooks/use-store";
+import { setUser } from "@/store/auth-slice";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { RegisterFormInputs, registerSchema } from "../auth/schemas/register";
+import { RegisterRequestDTO, RegisterResponseDTO } from "../auth/types/dto";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie"
 
 export function useRegisterForm() {
-    const [form, setForm] = useState<RegisterForm>({
-        email: "",
-        fullname: "",
-        password: "",
-    });
+    
+const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setError,
+} = useForm<RegisterFormInputs>({
+    resolver: zodResolver(registerSchema)
+})
 
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value
-        })
+const navigate = useNavigate()
+const dispatch = useAppDispatch();
+
+async function onSubmit(data: RegisterFormInputs) {
+    try{
+        const response = await axios.post<null, {data : RegisterResponseDTO}, RegisterRequestDTO>(
+            "http://localhost:5000/api/v1/auth/register",
+            {
+                fullname: data.fullname,
+                email: data.email,
+                password: data.password,
+            }
+        )
+        console.log(response.data);
+        
+        const {user, token} = response.data
+        
+        dispatch(
+            setUser(user)
+        ) 
+        Cookies.set("token" ,token, {expires: 1})
+        navigate("/")
+    } catch (error){
+        if (axios.isAxiosError(error) && error.response) {
+            const {
+                response: {data},
+            } = error 
+
+            setError(data.details[0].path[0], {
+                message: data.details[0].message,
+            })
+        }
     }
 
-    function handleSumbit() {
-        console.log(`Data regiter: `, form)
     }
     return {
-        handleChange,
-        handleSumbit
+        register,
+        handleSubmit,
+        errors,
+        isSubmitting,
+        onSubmit
     }
 }

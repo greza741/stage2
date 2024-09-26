@@ -9,7 +9,7 @@ class UserController {
             const users = await userService.getAllUsers()
             res.json(users)
         } catch (error) {
-            res.json(error)
+            res.status(500).json(error)
         }
     }
 
@@ -20,7 +20,7 @@ class UserController {
             const users = await userService.getUserById(Number(id))
             res.json(users)
         } catch (error) {
-            res.json(error)
+            res.status(500).json(error)
         }
     } 
     
@@ -31,7 +31,7 @@ class UserController {
             const users = await userService.getUserByEmail(email)
             res.json(users)
         } catch (error) {
-            res.json(error)
+            res.status(500).json(error)
         }
     }
 
@@ -42,7 +42,7 @@ class UserController {
            const users = await userService.createUser(value)
            res.json(users)
        } catch (error) {
-        res.json(error)
+        res.status(500).json(error)
     }
     }
 
@@ -51,7 +51,7 @@ class UserController {
            const users = await userService.updateUser(req.body)
            res.json(users)
        } catch (error) {
-        res.json(error)
+        res.status(500).json(error)
     }
     }
 
@@ -62,7 +62,7 @@ class UserController {
             const users = await userService.deleteUser(Number(id))
             res.json(users)
         } catch (error) {
-            res.json(error)
+            res.status(500).json(error)
         }
     }
 }
