@@ -22,7 +22,7 @@ export function AppRouter() {
     },
     {
       path: "/",
-      element: <HomeRoute />,
+      element: <LoginRoute />,
     },
     {
       path: "/profile",
