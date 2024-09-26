@@ -14,7 +14,7 @@ export function AppRouter() {
     },
     {
       path: "/login",
-      element: <HomeRoute />,
+      element: <LoginRoute />,
     },
     {
       element: <ProtectedRoutes />,
@@ -22,7 +22,7 @@ export function AppRouter() {
     },
     {
       path: "/",
-      element: <LoginRoute />,
+      element: <HomeRoute />,
     },
     {
       path: "/profile",
