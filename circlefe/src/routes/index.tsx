@@ -14,7 +14,7 @@ export function AppRouter() {
     },
     {
       path: "/login",
-      element: <LoginRoute />,
+      element: <HomeRoute />,
     },
     {
       element: <ProtectedRoutes />,
