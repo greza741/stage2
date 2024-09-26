@@ -92,7 +92,7 @@ export function MiddleBarHome() {
         {data?.map((thread) => {
            const createdAtDate = new Date(thread.createdAt);
           return (
-            <Box>
+            <Box  key={thread.id}>
         <Box paddingLeft={"20px"} display={"flex"} flexDir={"row"}>
           <Box
             borderRadius="full"
