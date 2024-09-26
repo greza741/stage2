@@ -18,11 +18,11 @@ export function useHome() {
       async function getThreads() {
         const response = await apiv1.get<null, { data: ThreadEntity[] }>(
           "/threads",
-          // {
-          //   headers: {
-          //     "ngrok-skip-browser-warning": "true",
-          //   },
-          // }
+          {
+            headers: {
+              "ngrok-skip-browser-warning": "true",
+            },
+          }
         );
         return response.data;
       }
