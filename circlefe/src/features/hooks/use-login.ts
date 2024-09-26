@@ -7,6 +7,7 @@ import { LoginFormInputs, loginSchema } from "../auth/schemas/login";
 import { LoginRequestDTO, LoginResponseDTO } from "../auth/types/dto";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { apiv1 } from "@/libs/api";
 
 export function useLoginForm() {
 const {
@@ -22,8 +23,8 @@ const dispatch = useAppDispatch();
 
 async function onSubmit(data: LoginFormInputs) {
     try{
-        const response = await axios.post<null, {data : LoginResponseDTO}, LoginRequestDTO>(
-            "http://localhost:5000/api/v1/auth/login",
+        const response = await apiv1.post<null, {data : LoginResponseDTO}, LoginRequestDTO>(
+            "/auth/login",
             {
                 email: data.email,
                 password: data.password,

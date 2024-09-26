@@ -7,6 +7,7 @@ import { RegisterFormInputs, registerSchema } from "../auth/schemas/register";
 import { RegisterRequestDTO, RegisterResponseDTO } from "../auth/types/dto";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"
+import { apiv1 } from "@/libs/api";
 
 export function useRegisterForm() {
     
@@ -24,8 +25,8 @@ const dispatch = useAppDispatch();
 
 async function onSubmit(data: RegisterFormInputs) {
     try{
-        const response = await axios.post<null, {data : RegisterResponseDTO}, RegisterRequestDTO>(
-            "http://localhost:5000/api/v1/auth/register",
+        const response = await apiv1.post<null, {data : RegisterResponseDTO}, RegisterRequestDTO>(
+            "/auth/register",
             {
                 fullname: data.fullname,
                 email: data.email,
