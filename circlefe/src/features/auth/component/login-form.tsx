@@ -5,7 +5,7 @@ import { Form, Link as ReactRouterLink } from "react-router-dom"
 
 
 export function LoginForm() {
-    const { register, onSubmit, handleSubmit} = useLoginForm()
+    const { register, onSubmit, handleSubmit, isSubmitting} = useLoginForm()
 
     return (
         <Box >
@@ -27,6 +27,7 @@ export function LoginForm() {
                     padding="20px"
                     color="white"
                     borderRadius="5px"
+                    isLoading={isSubmitting}
                 >Login</Button>
                 <Text>Don't have an account yet?
                     <ChakraLink as={ReactRouterLink} to={"/register"} color={"brand.green"}>

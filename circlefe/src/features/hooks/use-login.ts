@@ -37,7 +37,7 @@ async function onSubmit(data: LoginFormInputs) {
             setUser(user)
         )
         Cookies.set("token" ,token, {expires: 1})
-        navigate("/")
+        navigate("/login")
     }
     catch (error){
         if (axios.isAxiosError(error) && error.response) {
