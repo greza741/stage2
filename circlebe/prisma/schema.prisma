@@ -9,16 +9,20 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // directUrl = env("DIRECT_URL")
 }
 
 model User {
   id       Int      @id @default(autoincrement())
   email    String   @unique
   fullname String?
+  username String   @unique
   password String
+  bio      String?
+  profile  String?  @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTteR5C7aU0L5LtNt8c026L5kGCk4H6dy56Cw&s")
+  bgImage  String?  @default("https://c.files.bbci.co.uk/5DFC/production/_84606042_satan-promo.jpg")
   role     RoleEnum @default(MEMBER)
   threads  Thread[]
 

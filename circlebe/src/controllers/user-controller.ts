@@ -1,7 +1,12 @@
 import { Request, Response } from "express";
 import userService from "../services/user-service";
 import { createUserSchema } from "../utils/schemas/user.schema";
-
+import { CustomError, CustomErrorCode } from "../types/error";
+import { updateUserSchema } from "../utils/schemas/update.user.schema";
+import { extend } from "joi";
+interface RequestWithUser extends Request{
+    user?: any
+}
 
 class UserController {
     async find(req: Request, res: Response) {
@@ -13,11 +18,11 @@ class UserController {
         }
     }
 
-    async findById(req: Request, res: Response) {
+    async findById(req: RequestWithUser, res: Response) {
         try {
-            const {id} = req.params
+            const id = req.user.id
     
-            const users = await userService.getUserById(Number(id))
+            const users = await userService.getUserById(id)
             res.json(users)
         } catch (error) {
             res.status(500).json(error)
@@ -47,20 +52,32 @@ class UserController {
     }
 
     async update(req: Request, res: Response) {
-       try {
-           const users = await userService.updateUser(req.body)
-           res.json(users)
-       } catch (error) {
-        res.status(500).json(error)
-    }
-    }
+        /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#/components/schemas/UpdateUserDTO"
+                    }  
+                }
+            }
+        } 
+    */
+        try {
+            const userId = await (req as any).user.id;
+            const updatedData = req.body; 
+
+            const users = await userService.updateUser(updatedData, userId);
+            res.json(users);
+          } catch (error) {
+            res.status(500).json({ message: "Internal Server Error", error });
+          }
+        }
 
     async delete(req: Request, res: Response) {
         try {
-            const {id} = req.params
-           
-            const users = await userService.deleteUser(Number(id))
-            res.json(users)
+           res.clearCookie('token')
+           return res.json()
         } catch (error) {
             res.status(500).json(error)
         }

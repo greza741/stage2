@@ -8,6 +8,7 @@ export const loginSchema = Joi.object<LoginDTO>({
 
 export const registerSchema = Joi.object<RegisterDTO>({
     fullname : Joi.string().min(3).max(100).required(),
+    username : Joi.string().min(3).max(100).required(),
     email: Joi.string().email(),
     password: Joi.string().min(4),
 })

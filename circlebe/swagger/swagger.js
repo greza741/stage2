@@ -29,6 +29,7 @@ const doc = {
           },
           image: {
             type: "string",
+            format: "binary"
           },
         },
         required: ["content", "image"],
@@ -65,6 +66,9 @@ const doc = {
           fullname: {
             type: "string",
           },
+          username: {
+            type: "string",
+          },
           email: {
             type: "string",
             format: "email",
@@ -74,7 +78,26 @@ const doc = {
             format: "password",
           },
         },
-        required: ["fullname", "email", "password"],
+        required: ["fullname","username", "email", "password"],
+      },
+      UpdateUserDTO: {
+        type: "object",
+        properties: {
+          fullname: {
+            type: "string",
+          },
+          username: {
+            type: "string",
+          },
+          password: {
+            type: "string",
+            format: "password",
+          },
+          bio: {
+            type: "string",
+          },
+        },
+        required: ["fullname","username", "password","bio"],
       },
     },
     securitySchemes: {

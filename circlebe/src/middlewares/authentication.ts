@@ -24,6 +24,8 @@ export function authentication(req: Request, res: Response, next: NextFunction) 
         const secretKey = process.env.JWT_SECRET as string;
         const decoded = jwt.verify(token, secretKey);
         (req as any).user = decoded;
+        // const userId = (decoded as any).id;
+        // (req as any).user = { id: userId };
         next()
     } catch(error) {
         return res.status(401).json({

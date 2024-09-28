@@ -1,11 +1,23 @@
 import { Request, Response } from "express";
 import threadService from "../services/thread-service";
 import { createThreadSchema } from "../utils/schemas/thread.schema";
+import { User } from "@prisma/client";
+import { v2 as cloudinary } from "cloudinary";
+import cloudinaryService from "../services/cloudinary-service";
 
 class ThreadController {
   async find(req: Request, res: Response) {
     try {
       const threads = await threadService.getAllThreads();
+      res.json(threads);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+  async findByUser(req: Request, res: Response) {
+    const user = (req as any).user as User;
+    try {
+      const threads = await threadService.getUserThread(user);
       res.json(threads);
     } catch (error) {
       res.status(500).json(error);
@@ -27,7 +39,7 @@ class ThreadController {
     /*  #swagger.requestBody = {
             required: true,
             content: {
-                "application/json": {
+                "multipart/form-data": {
                     schema: {
                         $ref: "#/components/schemas/CreateThreadDTO"
                     }  
@@ -36,9 +48,17 @@ class ThreadController {
         } 
     */
     try {
-      const value = await createThreadSchema.validateAsync(req.body);
+      const user = (req as any).user;
+      const image = await  cloudinaryService.uploadSingle(req.file as Express.Multer.File)
 
-      const threads = await threadService.createThread(value);
+      const body = {
+        ...req.body,
+        image: image.secure_url
+      }
+      
+      const value = await createThreadSchema.validateAsync(body);
+
+      const threads = await threadService.createThread(value, user);
       res.json(threads);
     } catch (error) {
       res.status(500).json(error);
