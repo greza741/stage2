@@ -13,9 +13,12 @@ export type LoginResponseDTO = {
 export type RegisterRequestDTO = {
   email: string;
   fullname: string;
+  username: string;
   password: string;
 };
 
 export type RegisterResponseDTO = LoginResponseDTO
 
 export type UserStoreDTO = Omit<UserEntity, "password">
+
+export type ProfileDTO = Pick<UserEntity, "username" | "fullname" | "bio">

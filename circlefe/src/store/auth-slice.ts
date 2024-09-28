@@ -12,6 +12,10 @@ const authSlice = createSlice({
         ...state,
         id: action.payload.id,
         fullname: action.payload.fullname,
+        username: action.payload.username,
+        bio: action.payload.bio,
+        profile: action.payload.profile,
+        bgImage: action.payload.bgImage,
         email: action.payload.email,
         role: action.payload.role,
       };

@@ -29,6 +29,7 @@ async function onSubmit(data: RegisterFormInputs) {
             "/auth/register",
             {
                 fullname: data.fullname,
+                username: data.username,
                 email: data.email,
                 password: data.password,
             }

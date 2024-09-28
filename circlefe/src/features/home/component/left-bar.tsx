@@ -1,3 +1,4 @@
+import { useLogout } from "@/features/hooks/use-logout";
 import { Box, Button, Flex, FlexProps, Icon, Text } from "@chakra-ui/react";
 import React from "react";
 import { IconType } from "react-icons";
@@ -7,6 +8,7 @@ import { FiHome } from "react-icons/fi";
 import { RiUserSearchLine } from "react-icons/ri";
 import { SlLogout } from "react-icons/sl";
 import { Link } from "react-router-dom";
+
 
 interface LinkItemProps {
   name: string;
@@ -21,6 +23,7 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 export default function LeftBar() {
+  const logout = useLogout()
   return (
     <Box
       backgroundColor={"brand.background"}
@@ -39,10 +42,12 @@ export default function LeftBar() {
         </NavItem>
       ))}
       <Box
-        display={"flex"}
+        // display={"flex"}
         justifyContent={"center"}
         boxSize={"100%"}
         padding="10px"
+        alignContent={"center"} //
+        w={"100%"}
       >
         <Button
           backgroundColor={"brand.green"}
@@ -52,11 +57,25 @@ export default function LeftBar() {
         >
           Create Post
         </Button>
+        <Button
+         onClick={logout}
+              color={"white"}
+              backgroundColor={"brand.background"}
+              _hover={{
+                transform: "translateY(-4px)",
+                boxShadow: "lg",
+              }}
+              alignItems={"center"}
+              justifyContent={"center"}
+              w={"100%"}
+              mt={"500px"}
+            >
+              <Icon as={SlLogout} mr={"2"} fontSize={"20px"} />
+              <Text fontSize={"20"} paddingLeft={"1px"} marginBottom={"0px"}>
+                logout
+              </Text>
+            </Button>
       </Box>
-      <Flex position="absolute" bottom="20px" mx={"50"} align={"center"}>
-        <Icon as={SlLogout} mr={"2"} fontSize={"20px"} />
-        <Text fontSize={"20px"}>Logout</Text>
-      </Flex>
     </Box>
   );
 }

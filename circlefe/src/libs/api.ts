@@ -6,7 +6,7 @@ const baseURL = import.meta.env.VITE_BACKEND_URL
 export const apiv1 = axios.create({
     baseURL : `${baseURL}/api/v1`,
     headers: {
-        Authorization: Cookies.get("token")
+        Authorization: `Bearer ${Cookies.get("token")}`
     }
 })
 

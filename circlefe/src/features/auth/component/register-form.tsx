@@ -22,6 +22,10 @@ export function RegisterForm() {
                     {errors.fullname && (
                         <p style={{ color: "red", margin: 0 }}> {errors.fullname.message}</p>
                     )}
+                    <Input {...register("username")} name="username" type="text" placeholder="Username" />
+                    {errors.username && (
+                        <p style={{ color: "red", margin: 0 }}> {errors.username.message}</p>
+                    )}
                     <Input {...register("email")} name="email" type="email" placeholder="Email" />
                     {errors.email && (
                         <p style={{ color: "red", margin: 0 }}> {errors.email.message}</p>

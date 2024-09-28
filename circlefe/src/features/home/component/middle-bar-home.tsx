@@ -1,4 +1,5 @@
 import { useHome } from "@/features/hooks/use-home";
+import { useAppSelector } from "@/hooks/use-store";
 import {
   Avatar,
   Box,
@@ -8,11 +9,11 @@ import {
   Stack,
   Text
 } from "@chakra-ui/react";
+import { formatDistanceToNow } from "date-fns";
 import { BiCommentDetail } from "react-icons/bi";
 import { IoIosHeartEmpty } from "react-icons/io";
 import { Form } from "react-router-dom";
 import HorizontalLine from "./horizontal-line";
-import { formatDistanceToNow } from "date-fns";
 
 
 export function MiddleBarHome() {
@@ -25,6 +26,9 @@ export function MiddleBarHome() {
     data,
     isLoading,
   } = useHome();
+  const {
+    profile,
+  } = useAppSelector((state) => state.auth);
 
   if (isLoading) return <h1>Loading...</h1>;
 
@@ -54,7 +58,7 @@ export function MiddleBarHome() {
             height="40px" // sesuaikan dengan ukuran yang diinginkan
           >
             <Avatar
-              src="https://heavyocity.com/wp-content/uploads/2021/08/FA_JRR_Feature_Color.jpg" // ganti dengan URL foto profilmu
+              src={profile}
               objectFit="cover"
               width="100%"
               height="100%"
@@ -73,6 +77,7 @@ export function MiddleBarHome() {
               <Input
             
             {...register("image")}
+            type="file"
             placeholder="image..."
             color="white"
           />
@@ -89,7 +94,7 @@ export function MiddleBarHome() {
           </Form>
         </Box>
         <HorizontalLine />
-        {data?.map((thread) => {
+        {data?.slice().reverse().map((thread) => {
            const createdAtDate = new Date(thread.createdAt);
           return (
             <Box  key={thread.id}>
@@ -97,11 +102,11 @@ export function MiddleBarHome() {
           <Box
             borderRadius="full"
             overflow="hidden"
-            width="40px" // tidak sesuai
-            height="40px" // sesuaikan dengan ukuran yang diinginkan
+            width="40px" 
+            height="40px" 
           >
             <Avatar
-              src="https://heavyocity.com/wp-content/uploads/2021/08/FA_JRR_Feature_Color.jpg" // ganti dengan URL foto profilmu
+              src={thread.user.profile}
               objectFit="cover"
               width="100%"
               height="100%"
@@ -111,7 +116,7 @@ export function MiddleBarHome() {
             <Box>
               <Stack direction={`row`}>
                 <Text fontWeight={1000}>{thread.user.fullname} </Text>
-                <Text fontWeight={1}>@{thread.user.fullname}</Text>
+                <Text fontWeight={1}>@{thread.user.username}</Text>
                 <Text fontWeight={1}>•</Text>
                 <Text fontWeight={1}>{formatDistanceToNow(createdAtDate, { addSuffix: true })}</Text>
               </Stack>

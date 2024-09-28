@@ -11,7 +11,8 @@ import {
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export function RightBar() {
-  const {fullname, email} = useAppSelector((state) => state.auth)
+  const {fullname, username, bio, profile, bgImage} = useAppSelector((state) => state.auth)
+  
   return (
     <Box
       py={2}
@@ -37,9 +38,7 @@ export function RightBar() {
             paddingBottom={`10px`}
             h={"80px"}
             w={"full"}
-            src={
-              "https://images.unsplash.com/photo-1612865547334-09cb8cb455da?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
-            }
+            src={bgImage}
             objectFit="cover"
             alt="#"
           />
@@ -51,7 +50,7 @@ export function RightBar() {
               height="70px" // sesuaikan dengan ukuran yang diinginkan
             >
               <Image
-                src="https://heavyocity.com/wp-content/uploads/2021/08/FA_JRR_Feature_Color.jpg" // ganti dengan URL foto profilmu
+                src={profile}
                 alt="Profile Picture"
                 objectFit="cover"
                 width="100%"
@@ -80,8 +79,8 @@ export function RightBar() {
               <Heading fontSize={"2xl"} fontWeight={1000} fontFamily={"body"}>
                 {fullname}
               </Heading>
-              <Text fontSize={`small`}>{email}</Text>
-              <Text>Heal the world!</Text>
+              <Text fontSize={`small`}>@{username}</Text>
+              <Text>{bio}</Text>
             </Stack>
 
             <Stack direction={"row"} justify={"start"} spacing={2}>

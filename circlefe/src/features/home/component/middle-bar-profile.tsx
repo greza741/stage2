@@ -1,3 +1,5 @@
+import { useHome } from "@/features/hooks/use-home";
+import { useProfile } from "@/features/hooks/use-profile";
 import { useAppSelector } from "@/hooks/use-store";
 import {
   Box,
@@ -5,6 +7,14 @@ import {
   Flex,
   Heading,
   Image,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Stack,
   Tab,
   TabList,
@@ -12,11 +22,45 @@ import {
   TabPanels,
   Tabs,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
+import { formatDistanceToNow } from "date-fns";
+import React from "react";
+import { BiCommentDetail } from "react-icons/bi";
 import { FaArrowLeft } from "react-icons/fa";
+import { IoIosHeartEmpty } from "react-icons/io";
+import HorizontalLine from "./horizontal-line";
 
 export function MiddleBarProfile() {
-  const { fullname, email } = useAppSelector((state) => state.auth);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const OverlayTwo = () => (
+    <ModalOverlay
+      bg="none"
+      backdropFilter="auto"
+      backdropInvert="80%"
+      backdropBlur="2px"
+    />
+  );
+  const [overlay, setOverlay] = React.useState(<OverlayTwo />);
+  const {
+    data,
+    isLoading,
+  } = useHome();
+  const {
+    register,
+    handleSubmit,
+    errors,
+    isSubmitting,
+    onSubmit,
+  } = useProfile();
+
+  const dataProfile = useProfile().data
+  
+  const {
+    id: userId,
+  } = useAppSelector((state) => state.auth);
+
+  if (isLoading) return <h1>Loading...</h1>;
   return (
     <Box>
       <Box
@@ -37,7 +81,7 @@ export function MiddleBarProfile() {
             >
               <FaArrowLeft color="white" size={"40px"} />
               <Text fontSize={"40px"} paddingLeft={"20px"} marginBottom={"7px"}>
-                {fullname}
+                {dataProfile?.fullname}
               </Text>
             </Button>
           </Box>
@@ -46,9 +90,7 @@ export function MiddleBarProfile() {
             h={"200px"}
             w={"full"}
             borderRadius={"20px"}
-            src={
-              "https://images.unsplash.com/photo-1612865547334-09cb8cb455da?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
-            }
+            src={dataProfile?.bgImage}
             objectFit="cover"
             alt="#"
           />
@@ -60,7 +102,7 @@ export function MiddleBarProfile() {
               height="100px" // sesuaikan dengan ukuran yang diinginkan
             >
               <Image
-                src="https://heavyocity.com/wp-content/uploads/2021/08/FA_JRR_Feature_Color.jpg" // ganti dengan URL foto profilmu
+                src={dataProfile?.profile}
                 alt="Profile Picture"
                 objectFit="cover"
                 width="100%"
@@ -80,19 +122,93 @@ export function MiddleBarProfile() {
                 transform: "translateY(-4px)",
                 boxShadow: "lg",
               }}
+              ml="4"
+              onClick={() => {
+                setOverlay(<OverlayTwo />);
+                onOpen();
+              }}
             >
               Edit Profile
             </Button>
+            <Modal isCentered isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              {overlay}
+              <ModalContent
+                color={"white"}
+                backgroundColor={"brand.background"}
+              >
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <ModalHeader>Edit Profile</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                <Box
+          margin={"1px 1px"}
+          bg={"brand.background"}
+          borderRadius={`20px`}
+          overflow={"hidden"}
+          color={`white`}
+          padding={`1px 1px`}
+        >
+          <Image
+            paddingBottom={`1px`}
+            h={"80px"}
+            w={"full"}
+            src={dataProfile?.bgImage}
+            objectFit="cover"
+            alt="#"
+          />
+          <Flex paddingStart={`3%`} mt={-12} justifyContent={`start`}>
+            <Box
+              borderRadius="full"
+              overflow="hidden"
+              width="70px"
+              height="70px"
+            >
+              <Image
+                src={dataProfile?.profile}
+                alt="Profile Picture"
+                objectFit="cover"
+                width="100%"
+                height="100%"
+                />
+            </Box>
+          </Flex>
+        </Box>
+                  <Text mt={"10px"}>Name</Text>
+                  <Input {...register("fullname")} placeholder="Fullname" defaultValue={dataProfile?.fullname} /> 
+                  {errors.fullname && (
+            <p style={{ color: "red", margin: 0 }}>{errors.fullname.message}</p>
+          )}
+                  {/* edit fullname */}
+                  <Text mt={"10px"}>Username</Text>
+                  <Input {...register("username")} placeholder="username" defaultValue={dataProfile?.username} />
+                  {/* edit username */}
+                  <Text mt={"10px"}>Bio</Text>
+                  <Input {...register("bio")} placeholder="Bio" defaultValue={dataProfile?.bio} />
+                  {/* edit bio */}
+                  {/* Add more fields as needed */}
+                </ModalBody>
+                <ModalFooter>
+                  <Button type="submit" colorScheme="blue" mr={3} onClick={onClose}>
+                  {isSubmitting ? "Submitting..." : "Save"}
+                  </Button>
+                  <Button variant="ghost" onClick={onClose}>
+                    Cancel
+                  </Button>
+                </ModalFooter>
+                </form>
+              </ModalContent>
+            </Modal>
           </Box>
           <Box p={`20px 0px`}>
             <Stack spacing={0} align={"start"}>
               <Heading fontSize={"40px"} fontWeight={1000} fontFamily={"body"}>
-                {fullname}
+                {dataProfile?.fullname}
               </Heading>
               <Text fontSize={`20px`} color={"grey"}>
-                {email}
+                @{dataProfile?.username}
               </Text>
-              <Text>Heal the world!</Text>
+              <Text>{dataProfile?.bio}</Text>
             </Stack>
 
             <Stack direction={"row"} justify={"start"} spacing={2}>
@@ -107,40 +223,113 @@ export function MiddleBarProfile() {
             </Stack>
           </Box>
         </Box>
+
         <Box>
-      {/* Tabs for All Posts and Media */}
-      <Tabs variant="enclosed">
-        <TabList>
-          <Tab flex={"1"}>All Post</Tab>
-          <Tab flex={"1"}>Media</Tab>
-        </TabList>
+          <Tabs variant="enclosed">
+            <TabList>
+              <Tab flex={"1"}>All Post</Tab>
+              <Tab flex={"1"}>Media</Tab>
+            </TabList>
 
-        <TabPanels>
-          {/* All Post Section */}
-          <TabPanel>
-            <Box>
-              <Text fontWeight="bold">Post 1</Text>
-              <Text fontSize="sm">This is the content of post 1.</Text>
-            </Box>
-            <Box mt={4}>
-              <Text fontWeight="bold">Post 2</Text>
-              <Text fontSize="sm">This is the content of post 2.</Text>
-            </Box>
-            {/* Add more posts as needed */}
-          </TabPanel>
+            <TabPanels>
+              <TabPanel>
+                {!data && <Text>Loading posts...</Text>}
+                {data?.length === 0 && <Text>No posts available.</Text>}
 
-          {/* Media Section */}
-          <TabPanel>
-            <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" gap={2}>
-              <Image src="https://via.placeholder.com/150" alt="Media 1" />
-              <Image src="https://via.placeholder.com/150" alt="Media 2" />
-              <Image src="https://via.placeholder.com/150" alt="Media 3" />
-              {/* Add more media as needed */}
-            </Box>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
-    </Box>
+                {data
+                  ?.filter((thread) => thread.user.id === userId)
+                  ?.slice()
+                  .reverse()
+                  ?.map((thread) => {
+                    const createdAtDate = new Date(thread.createdAt);
+                    return (
+                      <Box key={thread.id}>
+                        <Box flex={2}>
+                          <Box>
+                            <Stack direction={`row`}>
+                              <Text fontWeight={1000}>
+                                {thread.user.fullname}{" "}
+                              </Text>
+                              <Text fontWeight={1}>
+                                @{thread.user.fullname}
+                              </Text>
+                              <Text fontWeight={1}>•</Text>
+                              <Text fontWeight={1}>
+                                {formatDistanceToNow(createdAtDate, {
+                                  addSuffix: true,
+                                })}
+                              </Text>
+                            </Stack>
+                          </Box>
+                          <Box paddingTop={"10px"}>
+                            <Image
+                              src={thread.image}
+                              width={"300px"}
+                              height={"300px"}
+                              objectFit={"cover"}
+                            />
+                            <Text>{thread.content}</Text>
+                          </Box>
+                          <Box paddingTop={"10px"}>
+                            <Stack direction={`row`} alignItems="center">
+                              <Box
+                                display={"flex"}
+                                flexDirection={"row"}
+                                alignItems="center"
+                              >
+                                <IoIosHeartEmpty size={"20px"} />
+                                <Text fontWeight={1} paddingLeft={"10px"}>
+                                  {thread.likesCount}
+                                </Text>
+                              </Box>
+                              <Box
+                                display={"flex"}
+                                flexDirection={"row"}
+                                alignItems="center"
+                                paddingLeft={"20px"}
+                              >
+                                <BiCommentDetail size={"20px"} />
+                                <Text fontWeight={1} paddingLeft={"10px"}>
+                                  {thread.repliesCount} Replies
+                                </Text>
+                              </Box>
+                            </Stack>
+                          </Box>
+                        </Box>
+                        <HorizontalLine />
+                      </Box>
+                    );
+                  })}
+              </TabPanel>
+
+              <TabPanel>
+                {!data && <Text>Loading posts...</Text>}
+                {data?.length === 0 && <Text>No posts available.</Text>}
+                <Box
+                  display="grid"
+                  gridTemplateColumns="repeat(3, 1fr)"
+                  gap={2}
+                >
+                  {data
+                    ?.filter((thread) => thread.user.id === userId)
+                    ?.slice()
+                    .reverse()
+                    ?.map((thread) => {
+                      // const createdAtDate = new Date(thread.createdAt);
+                      return (
+                        <Image
+                          key={thread.id}
+                          src={thread.image}
+                          h={"500px"}
+                          objectFit="cover"
+                        />
+                      );
+                    })}
+                </Box>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </Box>
       </Box>
     </Box>
   );
