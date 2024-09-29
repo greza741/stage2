@@ -1,10 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ProtectedRoutes } from "./_protected-routes";
+import FollowRoute from "./follow";
 import HomeRoute from "./home";
 import LoginRoute from "./login";
 import ProfileRoute from "./profile";
 import RegisterRoute from "./register";
-import Search from "./search";
+import SearchRoute from "./search";
 
 export function AppRouter() {
   const router = createBrowserRouter([
@@ -18,7 +19,8 @@ export function AppRouter() {
     },
     {
       element: <ProtectedRoutes />,
-      children: [],
+      children: [
+      ],
     },
     {
       path: "/",
@@ -30,7 +32,11 @@ export function AppRouter() {
     },
     {
       path: "/search",
-      element: <Search />,
+      element: <SearchRoute />,
+    },
+    {
+      path: "/follow",
+      element: <FollowRoute />,
     },
   ]);
 

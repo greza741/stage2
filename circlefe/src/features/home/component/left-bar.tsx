@@ -18,7 +18,7 @@ interface LinkItemProps {
 const LinkItems: Array<LinkItemProps> = [
   { name: "Home", icon: FiHome, path: "/" },
   { name: "Search", icon: RiUserSearchLine, path: "/search" },
-  { name: "Follows", icon: CiHeart, path: "/" },
+  { name: "Follows", icon: CiHeart, path: "/follow" },
   { name: "Profile", icon: CgProfile, path: "/profile" },
 ];
 
