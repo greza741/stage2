@@ -12,7 +12,7 @@ routerV1.get("/users",authentication, userController.find)
 routerV1.get("/users/id",authentication, userController.findById)
 routerV1.get("/users/email/:email", userController.findByEmail)
 routerV1.post("/users", userController.create)
-routerV1.put("/users",authentication, userController.update)
+routerV1.put("/users",authentication,uploadDisk.single("image"), userController.update)
 routerV1.post("/logout", (req: Request, res: Response) => {
     res.clearCookie('token');
     return res.status(200).json({ message: "Logout successful" });

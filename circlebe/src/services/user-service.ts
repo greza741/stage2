@@ -53,7 +53,7 @@ class UserServices {
   async updateUser(
     data: UpdateUserDTO,
     userId: number
-  ): Promise<{user: Pick<User, "fullname" | "username" | "bio" | "id"> } > {
+  ): Promise<{user: Pick<User, "fullname" | "username" | "bio" | "id" | "profile"> } > {
     const user = await prisma.user.findUnique({
       where: {
         id: userId,
@@ -67,11 +67,15 @@ class UserServices {
         code: CustomErrorCode.USER_NOT_EXISTS,
       } as CustomError;
     }
-    const updatedData: Partial<Pick <User, "fullname" | "username" | "bio">> = {};
+    const updatedData: Partial<Pick <User, "fullname" | "username" | "bio" | "profile">> = {};
 
     if (data.fullname) updatedData.fullname = data.fullname;
 
     if (data.username) updatedData.username = data.username;
+
+    if (data.profile) {
+      updatedData.profile = data.profile;
+    }
 
     // if (data.password) {
     //   const saltRounds = 10;
@@ -88,6 +92,7 @@ class UserServices {
         fullname: true,
         username: true,
         bio: true,
+        profile: true
       }
     });
     return {user: updateUser}

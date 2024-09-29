@@ -1,4 +1,4 @@
-import { useAppSelector } from "@/hooks/use-store";
+import { useProfile } from "@/features/hooks/use-profile";
 import {
   Box,
   Button,
@@ -11,8 +11,7 @@ import {
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export function RightBar() {
-  const {fullname, username, bio, profile, bgImage} = useAppSelector((state) => state.auth)
-  
+  const dataProfile = useProfile().data;
   return (
     <Box
       py={2}
@@ -38,7 +37,7 @@ export function RightBar() {
             paddingBottom={`10px`}
             h={"80px"}
             w={"full"}
-            src={bgImage}
+            src={dataProfile?.bgImage}
             objectFit="cover"
             alt="#"
           />
@@ -50,7 +49,7 @@ export function RightBar() {
               height="70px" // sesuaikan dengan ukuran yang diinginkan
             >
               <Image
-                src={profile}
+                src={dataProfile?.profile}
                 alt="Profile Picture"
                 objectFit="cover"
                 width="100%"
@@ -77,10 +76,10 @@ export function RightBar() {
           <Box p={`20px 0px`}>
             <Stack spacing={0} align={"start"}>
               <Heading fontSize={"2xl"} fontWeight={1000} fontFamily={"body"}>
-                {fullname}
+                {dataProfile?.fullname}
               </Heading>
-              <Text fontSize={`small`}>@{username}</Text>
-              <Text>{bio}</Text>
+              <Text fontSize={`small`}>@{dataProfile?.username}</Text>
+              <Text>{dataProfile?.bio}</Text>
             </Stack>
 
             <Stack direction={"row"} justify={"start"} spacing={2}>

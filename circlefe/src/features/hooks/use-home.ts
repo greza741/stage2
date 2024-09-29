@@ -63,8 +63,6 @@ formData.append("image", data.image[0])
 
   async function onSubmit(data: CreateThreadFormInputs) {
     await createThreadAsync(data);
-
-    alert("Thread berhasil dibuat!");
   }
 
   return {

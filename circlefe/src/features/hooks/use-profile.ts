@@ -69,10 +69,8 @@ export function useProfile() {
    try {
     await ProfileAsync(data);
 
-    alert("Profile berhasil diedit!");
   }catch (error) {
     console.error("Failed to edit profile:", error);
-    alert("Terjadi kesalahan saat mengedit profil.");
   }
 }
 

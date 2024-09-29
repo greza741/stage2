@@ -8,8 +8,7 @@ export type CreateUserDTO = {
 export type UpdateUserDTO = {
   fullname: string;
   username: string;
-  // password: string;
   bio?: string;
-  profile?: FileList;
-  bgImage?: FileList;
+  profile?: string;
+  bgImage?: string;
 };
