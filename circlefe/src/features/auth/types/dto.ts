@@ -21,4 +21,10 @@ export type RegisterResponseDTO = LoginResponseDTO
 
 export type UserStoreDTO = Omit<UserEntity, "password">
 
-export type ProfileDTO = Pick<UserEntity, "username" | "fullname" | "bio">
+export type ProfileDTO = {
+  fullname: string;
+  username: string;
+  bio: string;
+  profile: FileList;
+  bgImage: FileList;
+}

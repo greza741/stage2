@@ -1,3 +1,4 @@
+import { useHome } from "@/features/hooks/use-home";
 import { useProfile } from "@/features/hooks/use-profile";
 import {
   Box,
@@ -5,13 +6,40 @@ import {
   Flex,
   Heading,
   Image,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Stack,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
+import React from "react";
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export function RightBar() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const OverlayTwo = () => (
+    <ModalOverlay
+      bg="none"
+      backdropFilter="auto"
+      backdropInvert="80%"
+      backdropBlur="2px"
+    />
+  );
+  const [overlay, setOverlay] = React.useState(<OverlayTwo />);
+  const {isLoading } = useHome();
+  const { register, handleSubmit, errors, isSubmitting, onSubmit } =
+    useProfile();
+
   const dataProfile = useProfile().data;
+
+
+  if (isLoading) return <h1>Loading...</h1>;
   return (
     <Box
       py={2}
@@ -45,8 +73,8 @@ export function RightBar() {
             <Box
               borderRadius="full"
               overflow="hidden"
-              width="70px" // sesuaikan dengan ukuran yang diinginkan
-              height="70px" // sesuaikan dengan ukuran yang diinginkan
+              width="70px"
+              height="70px"
             >
               <Image
                 src={dataProfile?.profile}
@@ -69,9 +97,125 @@ export function RightBar() {
                 transform: "translateY(-4px)",
                 boxShadow: "lg",
               }}
+              onClick={() => {
+                setOverlay(<OverlayTwo />);
+                onOpen();
+              }}
             >
               Edit Profile
             </Button>
+            <Modal isCentered isOpen={isOpen} onClose={onClose}>
+              <ModalOverlay />
+              {overlay}
+              <ModalContent
+                color={"white"}
+                backgroundColor={"brand.background"}
+              >
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <ModalHeader>Edit Profile</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <Box
+                      margin={"1px 1px"}
+                      bg={"brand.background"}
+                      borderRadius={`20px`}
+                      overflow={"hidden"}
+                      color={`white`}
+                      padding={`1px 1px`}
+                    >
+                      <label>
+                      <Image
+                        paddingBottom={`1px`}
+                        h={"80px"}
+                        w={"full"}
+                        src={dataProfile?.bgImage}
+                        objectFit="cover"
+                        alt="#"
+                      />
+                      <input 
+                      // {...register("bgImage")}
+                       type="file" accept="image/*" style={{ display: 'none' }} />
+                      </label>
+                      <Flex
+                        paddingStart={`3%`}
+                        mt={-12}
+                        justifyContent={`start`}
+                      >
+                        <Box
+                          borderRadius="full"
+                          overflow="hidden"
+                          width="70px"
+                          height="70px"
+                        >
+                          <label>
+                          <Image 
+                            src={dataProfile?.profile}
+                            alt="Profile Picture"
+                            objectFit="cover"
+                            width="100%"
+                            height="100%"
+                          />
+                           <input 
+                          //  {...register("profile")}
+                            type="file" accept="image/*" style={{ display: 'none' }} />
+                          </label>
+                        </Box>
+                      </Flex>
+                    </Box>
+                    <Text mt={"10px"}>Name</Text>
+                    <Input
+                      {...register("fullname")}
+                      placeholder="Fullname"
+                      defaultValue={dataProfile?.fullname}
+                    />
+                    {errors.fullname && (
+                      <p style={{ color: "red", margin: 0 }}>
+                        {errors.fullname.message}
+                      </p>
+                    )}
+                    {/* edit fullname */}
+                    <Text mt={"10px"}>Username</Text>
+                    <Input
+                      {...register("username")}
+                      placeholder="username"
+                      defaultValue={dataProfile?.username}
+                    />
+                    {/* edit username */}
+                    {errors.username && (
+                      <p style={{ color: "red", margin: 0 }}>
+                        {errors.username.message}
+                      </p>
+                    )}
+                    <Text mt={"10px"}>Bio</Text>
+                    <Input
+                      {...register("bio")}
+                      placeholder="Bio"
+                      defaultValue={dataProfile?.bio}
+                    />
+                    {errors.bio && (
+                      <p style={{ color: "red", margin: 0 }}>
+                        {errors.bio.message}
+                      </p>
+                    )}
+                    {/* edit bio */}
+                    {/* Add more fields as needed */}
+                  </ModalBody>
+                  <ModalFooter justifyContent="flex-start">
+                    <Button
+                      type="submit"
+                      colorScheme="blue"
+                      mr={3}
+                      onClick={onClose}
+                    >
+                      {isSubmitting ? "Submitting..." : "Save"}
+                    </Button>
+                    <Button variant="ghost" colorScheme="red" onClick={onClose}>
+                      Cancel
+                    </Button>
+                  </ModalFooter>
+                </form>
+              </ModalContent>
+            </Modal>
           </Box>
           <Box p={`20px 0px`}>
             <Stack spacing={0} align={"start"}>
@@ -117,8 +261,8 @@ export function RightBar() {
               <Box
                 borderRadius="full"
                 overflow="hidden"
-                width="40px" // sesuaikan dengan ukuran yang diinginkan
-                height="40px" // sesuaikan dengan ukuran yang diinginkan
+                width="40px" 
+                height="40px" 
               >
                 <Image
                   src="https://imgs.search.brave.com/5E75yP4O3InyRwdd-PQ-JvIfXKcFhKMDFtulaDdB5Q8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/bW9zLmNtcy5mdXR1/cmVjZG4ubmV0L3do/TEdEV3RzWFB4RXJ2/Tm53NnFVNDYtMzIw/LTgwLmpwZw" // ganti dengan URL foto profilmu

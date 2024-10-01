@@ -6,6 +6,7 @@ import LoginRoute from "./login";
 import ProfileRoute from "./profile";
 import RegisterRoute from "./register";
 import SearchRoute from "./search";
+import { Suggestion2 } from "@/features/home/layout/suggestion";
 
 export function AppRouter() {
   const router = createBrowserRouter([
@@ -37,6 +38,10 @@ export function AppRouter() {
     {
       path: "/follow",
       element: <FollowRoute />,
+    },
+    {
+      path: "/suggestion2",
+      element: <Suggestion2 />,
     },
   ]);
 

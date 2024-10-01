@@ -4,15 +4,15 @@ import { createUserSchema } from "../utils/schemas/user.schema";
 import { CustomError, CustomErrorCode } from "../types/error";
 import { updateUserSchema } from "../utils/schemas/update.user.schema";
 import { extend } from "joi";
-import cloudinaryService from "../services/cloudinary-service";
+import userSuggestion2 from "../services/suggestion2-service";
 interface RequestWithUser extends Request{
     user?: any
 }
 
-class UserController {
+class SuggestionController2 {
     async find(req: Request, res: Response) {
         try {
-            const users = await userService.getAllUsers()
+            const users = await userSuggestion2.getAllUsers()
             res.json(users)
         } catch (error) {
             res.status(500).json(error)
@@ -67,7 +67,6 @@ class UserController {
         try {
             const userId = await (req as any).user.id;
             const updatedData = req.body; 
-            // const image = await  cloudinaryService.uploadSingle(req.file as Express.Multer.File)
 
             const users = await userService.updateUser(updatedData, userId);
             res.json(users);
@@ -86,4 +85,4 @@ class UserController {
     }
 }
 
-export default new UserController()
+export default new SuggestionController2()

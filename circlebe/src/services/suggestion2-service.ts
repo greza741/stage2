@@ -1,20 +1,59 @@
-import { PrismaClient, Thread, User } from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
 import { CreateUserDTO, UpdateUserDTO } from "../dto/user.dto";
 import { CustomError, CustomErrorCode } from "../types/error";
-import bcrypt from "bcrypt"; // Import bcrypt
 
 const prisma = new PrismaClient();
 
-class UserServices {
+class UserSuggestion2 {
   async getAllUsers(): Promise<User[]> {
-    return await prisma.user.findMany();
+    return [
+      {
+        fullname: "fullname1",
+        username: "test",
+        bio: "test",
+        id: 1,
+        profile: "test",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        email: "test",
+        bgImage: "test",
+        password: "test",
+        role: "ADMIN",
+      },
+      {
+        fullname: "test1",
+        username: "test1",
+        bio: "test1",
+        id: 1,
+        profile: "test1",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        email: "test1",
+        bgImage: "test1",
+        password: "test1",
+        role: "ADMIN",
+      },
+      {
+        fullname: "test2",
+        username: "test2",
+        bio: "test2",
+        id: 1,
+        profile: "test2",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        email: "test2",
+        bgImage: "test2",
+        password: "test2",
+        role: "ADMIN",
+      },
+    ];
   }
 
   async getUserById(userId: number): Promise<Omit<User, "password"> | null> {
     const user = await prisma.user.findUnique({
       where: {
         id: userId,
-      }, 
+      },
       select: {
         fullname: true,
         username: true,
@@ -25,8 +64,8 @@ class UserServices {
         updatedAt: true,
         email: true,
         id: true,
-        role: true
-      }
+        role: true,
+      },
     });
     if (!user) {
       throw {
@@ -53,7 +92,9 @@ class UserServices {
   async updateUser(
     data: UpdateUserDTO,
     userId: number
-  ): Promise<{user: Pick<User, "fullname" | "username" | "bio" | "id" | "profile"> } > {
+  ): Promise<{
+    user: Pick<User, "fullname" | "username" | "bio" | "id" | "profile">;
+  }> {
     const user = await prisma.user.findUnique({
       where: {
         id: userId,
@@ -67,7 +108,9 @@ class UserServices {
         code: CustomErrorCode.USER_NOT_EXISTS,
       } as CustomError;
     }
-    const updatedData: Partial<Pick <User, "fullname" | "username" | "bio" | "profile">> = {};
+    const updatedData: Partial<
+      Pick<User, "fullname" | "username" | "bio" | "profile">
+    > = {};
 
     if (data.fullname) updatedData.fullname = data.fullname;
 
@@ -87,15 +130,15 @@ class UserServices {
     const updateUser = await prisma.user.update({
       where: { id: userId },
       data: updatedData,
-      select:{
+      select: {
         id: true,
         fullname: true,
         username: true,
         bio: true,
-        profile: true
-      }
+        profile: true,
+      },
     });
-    return {user: updateUser}
+    return { user: updateUser };
   }
 
   async deleteUser(id: number): Promise<User | null> {
@@ -119,4 +162,4 @@ class UserServices {
   }
 }
 
-export default new UserServices();
+export default new UserSuggestion2();

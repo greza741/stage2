@@ -50,10 +50,13 @@ export default function LeftBar() {
         w={"100%"}
       >
         <Button
+          as={Link}
+          to={"/"}
           backgroundColor={"brand.green"}
           color="white"
           borderRadius="20px"
           width={"100%"}
+          
         >
           Create Post
         </Button>
