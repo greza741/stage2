@@ -25,6 +25,6 @@ export type ProfileDTO = {
   fullname: string;
   username: string;
   bio: string;
-  profile: FileList;
-  bgImage: FileList;
+  // profile: string;
+  // bgImage: string;
 }

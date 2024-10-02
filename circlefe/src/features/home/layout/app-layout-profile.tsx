@@ -13,7 +13,7 @@ export function AppLayoutProfile() {
         <LeftBar />
       </Box>
       <Box flex={"5"} overflowY={"auto"} height={"100vh"}>
-        <OverlayScrollbarsComponent
+      <OverlayScrollbarsComponent
           element="div"
           options={{ scrollbars: { autoHide: "scroll" } }}
           events={{
@@ -25,8 +25,9 @@ export function AppLayoutProfile() {
           className="os-theme-dark"
           defer
         >
-          <MiddleBarProfile/>
+          <MiddleBarProfile />
         </OverlayScrollbarsComponent>
+
       </Box>
       <Box flex={"3"}>
         <RightBarProfile />

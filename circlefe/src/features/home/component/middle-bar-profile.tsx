@@ -25,7 +25,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { formatDistanceToNow } from "date-fns";
-import React from "react";
+import React, { useState } from "react";
 import { BiCommentDetail } from "react-icons/bi";
 import { FaArrowLeft } from "react-icons/fa";
 import { IoIosHeartEmpty } from "react-icons/io";
@@ -37,10 +37,11 @@ export function MiddleBarProfile() {
     <ModalOverlay
       bg="none"
       backdropFilter="auto"
-      backdropInvert="80%"
+      backdropInvert="100%"
       backdropBlur="2px"
     />
   );
+  const [openModalId, setOpenModalId] = useState(null); // Menyimpan id modal yang terbuka
   const [overlay, setOverlay] = React.useState(<OverlayTwo />);
   const { data, isLoading } = useHome();
   const { register, handleSubmit, errors, isSubmitting, onSubmit } =
@@ -140,17 +141,20 @@ export function MiddleBarProfile() {
                       padding={`1px 1px`}
                     >
                       <label>
-                      <Image
-                        paddingBottom={`1px`}
-                        h={"80px"}
-                        w={"full"}
-                        src={dataProfile?.bgImage}
-                        objectFit="cover"
-                        alt="#"
-                      />
-                      <input 
-                      // {...register("bgImage")}
-                       type="file" accept="image/*" style={{ display: 'none' }} />
+                        <Image
+                          paddingBottom={`1px`}
+                          h={"80px"}
+                          w={"full"}
+                          src={dataProfile?.bgImage}
+                          objectFit="cover"
+                          alt="#"
+                        />
+                        <input
+                          // {...register("bgImage")}
+                          type="file"
+                          accept="image/*"
+                          style={{ display: "none", cursor: "pointer" }}
+                        />
                       </label>
                       <Flex
                         paddingStart={`3%`}
@@ -164,16 +168,19 @@ export function MiddleBarProfile() {
                           height="70px"
                         >
                           <label>
-                          <Image 
-                            src={dataProfile?.profile}
-                            alt="Profile Picture"
-                            objectFit="cover"
-                            width="100%"
-                            height="100%"
-                          />
-                           <input 
-                          //  {...register("profile")}
-                            type="file" accept="image/*" style={{ display: 'none' }} />
+                            <Image
+                              src={dataProfile?.profile}
+                              alt="Profile Picture"
+                              objectFit="cover"
+                              width="100%"
+                              height="100%"
+                            />
+                            <input
+                              //  {...register("profile")}
+                              type="file"
+                              accept="image/*"
+                              style={{ display: "none" }}
+                            />
                           </label>
                         </Box>
                       </Flex>
@@ -275,6 +282,7 @@ export function MiddleBarProfile() {
                   .reverse()
                   ?.map((thread) => {
                     const createdAtDate = new Date(thread.createdAt);
+                    const isOpen = openModalId === thread.id;
                     return (
                       <Box key={thread.id}>
                         <Box flex={2}>
@@ -300,7 +308,35 @@ export function MiddleBarProfile() {
                               width={"300px"}
                               height={"300px"}
                               objectFit={"cover"}
+                              onClick={() => setOpenModalId(thread.id as unknown as null)}
                             />
+                            <Modal onClose={() => setOpenModalId(null)} isOpen={isOpen} isCentered>
+                            <ModalOverlay
+                              bg="blackAlpha.300"
+                              backdropFilter="blur(10px) hue-rotate(90deg)"
+                            />
+                            <ModalContent>
+                              <ModalCloseButton />
+                              <ModalBody>
+                                <Box>
+                                  <Box paddingTop={"10px"}>
+                                    <Image
+                                      src={thread.image}
+                                      width={"5000"}
+                                      height={"500"}
+                                      objectFit={"cover"}
+                                      />
+                                    <Box>
+                                      <Text>{thread.content}</Text>
+                                    </Box>
+                                  </Box>
+                                </Box>
+                              </ModalBody>
+                              {/* <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter> */}
+                            </ModalContent>
+                          </Modal>
                             <Text>{thread.content}</Text>
                           </Box>
                           <Box paddingTop={"10px"}>
@@ -348,14 +384,43 @@ export function MiddleBarProfile() {
                     ?.slice()
                     .reverse()
                     ?.map((thread) => {
+                      const isOpen = openModalId === thread.id; // Cek apakah modal untuk thread ini terbuka
+                      // const { isOpen, onOpen, onClose } = useDisclosure();
                       // const createdAtDate = new Date(thread.createdAt);
                       return (
-                        <Image
-                          key={thread.id}
-                          src={thread.image}
-                          h={"500px"}
-                          objectFit="cover"
-                        />
+                        <Box key={thread.id}>
+                          <Image
+                            src={thread.image}
+                            h={"300px"}
+                            objectFit="cover"
+                            onClick={() => setOpenModalId(thread.id as unknown as null)} //
+                            
+                          />
+                          <Modal onClose={() => setOpenModalId(null)} isOpen={isOpen} isCentered>
+                            <ModalOverlay
+                              bg="blackAlpha.300"
+                              backdropFilter="blur(10px) hue-rotate(90deg)"
+                            />
+                            <ModalContent>
+                              <ModalCloseButton />
+                              <ModalBody>
+                                <Box>
+                                  <Box paddingTop={"10px"}>
+                                    <Image
+                                      src={thread.image}
+                                      width={"5000"}
+                                      height={"500"}
+                                      objectFit={"cover"}
+                                    />
+                                  </Box>
+                                </Box>
+                              </ModalBody>
+                              {/* <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter> */}
+                            </ModalContent>
+                          </Modal>
+                        </Box>
                       );
                     })}
                 </Box>

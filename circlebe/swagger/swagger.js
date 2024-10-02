@@ -89,15 +89,20 @@ const doc = {
           username: {
             type: "string",
           },
-          password: {
-            type: "string",
-            format: "password",
-          },
           bio: {
             type: "string",
           },
+          profile: {
+            type: "string",
+            format: "binary",
+          },
+          bgImage: {
+            type: "string",
+            format: "binary",
+          },
+          
         },
-        required: ["fullname","username", "password","bio"],
+        // required: ["fullname","username", "bio", "profile" , "bgImage"],
       },
     },
     securitySchemes: {

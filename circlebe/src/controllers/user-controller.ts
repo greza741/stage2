@@ -56,7 +56,7 @@ class UserController {
         /*  #swagger.requestBody = {
             required: true,
             content: {
-                "application/json": {
+                "multipart/form-data": {
                     schema: {
                         $ref: "#/components/schemas/UpdateUserDTO"
                     }  
@@ -66,10 +66,20 @@ class UserController {
     */
         try {
             const userId = await (req as any).user.id;
-            const updatedData = req.body; 
-            // const image = await  cloudinaryService.uploadSingle(req.file as Express.Multer.File)
+            const updateData = req.body; 
+            // const profile = await  cloudinaryService.uploadSingle(req.file as Express.Multer.File)
+            // const bgImage = await  cloudinaryService.uploadSingle(req.file as Express.Multer.File)
 
-            const users = await userService.updateUser(updatedData, userId);
+            // const body = {
+            //     ...req.body,
+            //     userId,
+                // profile: profile.secure_url,
+                // bgImage: bgImage.secure_url
+            //   }
+              
+            //   const value = await updateUserSchema.validateAsync(body);
+        
+            const users = await userService.updateUser(updateData, userId);
             res.json(users);
           } catch (error) {
             res.status(500).json({ message: "Internal Server Error", error });

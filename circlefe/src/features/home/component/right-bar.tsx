@@ -87,8 +87,9 @@ export function RightBar() {
           </Flex>
           <Box display={`flex`} justifyContent={`end`} mt={`-7`}>
             <Button
-              fontSize={`12`}
-              boxSize={`1px 1px`}
+              fontSize={`15`}
+              w={'40%'}
+              h={'100%'}
               border={`1px solid white`}
               backgroundColor={`brand.background2`}
               color={"white"}
