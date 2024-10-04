@@ -150,16 +150,19 @@ export function MiddleBarHome() {
                     </Box>
                     <Box paddingTop={"10px"}>
                       <Stack direction={`row`} alignItems="center">
+                        <label>
                         <Box
                           display={"flex"}
                           flexDirection={"row"}
                           alignItems="center"
                         >
                           <IoIosHeartEmpty size={"20px"} />
+                          <input type="button" />
                           <Text fontWeight={1} paddingLeft={"10px"}>
                             {thread.likesCount}
                           </Text>
                         </Box>
+                          </label>  
                         <Box
                           display={"flex"}
                           flexDirection={"row"}
