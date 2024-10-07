@@ -28,7 +28,7 @@ import { formatDistanceToNow } from "date-fns";
 import React, { useState } from "react";
 import { BiCommentDetail } from "react-icons/bi";
 import { FaArrowLeft } from "react-icons/fa";
-import { IoIosHeartEmpty } from "react-icons/io";
+import LikeButtonPost from "../button/like";
 import HorizontalLine from "./horizontal-line";
 
 export function MiddleBarProfile() {
@@ -49,7 +49,7 @@ export function MiddleBarProfile() {
 
   const dataProfile = useProfile().data;
 
-  const { id: userId } = useAppSelector((state) => state.auth);
+  const { id: authorId } = useAppSelector((state) => state.auth);
 
   if (isLoading) return <h1>Loading...</h1>;
   return (
@@ -277,7 +277,7 @@ export function MiddleBarProfile() {
                 {data?.length === 0 && <Text>No posts available.</Text>}
 
                 {data
-                  ?.filter((thread) => thread.user.id === userId)
+                  ?.filter((thread) => thread.author.id === authorId)
                   ?.slice()
                   .reverse()
                   ?.map((thread) => {
@@ -289,10 +289,10 @@ export function MiddleBarProfile() {
                           <Box>
                             <Stack direction={`row`}>
                               <Text fontWeight={1000}>
-                                {thread.user.fullname}{" "}
+                                {thread.author.fullname}{" "}
                               </Text>
                               <Text fontWeight={1}>
-                                @{thread.user.fullname}
+                                @{thread.author.fullname}
                               </Text>
                               <Text fontWeight={1}>•</Text>
                               <Text fontWeight={1}>
@@ -326,6 +326,7 @@ export function MiddleBarProfile() {
                                       height={"500"}
                                       objectFit={"cover"}
                                       />
+                                      <Text>asdsa</Text>
                                     <Box>
                                       <Text>{thread.content}</Text>
                                     </Box>
@@ -341,16 +342,18 @@ export function MiddleBarProfile() {
                           </Box>
                           <Box paddingTop={"10px"}>
                             <Stack direction={`row`} alignItems="center">
+                              <label>
                               <Box
                                 display={"flex"}
                                 flexDirection={"row"}
                                 alignItems="center"
                               >
-                                <IoIosHeartEmpty size={"20px"} />
+                                <LikeButtonPost threadId={thread.id} />
                                 <Text fontWeight={1} paddingLeft={"10px"}>
                                   {thread.likesCount}
                                 </Text>
                               </Box>
+                              </label>
                               <Box
                                 display={"flex"}
                                 flexDirection={"row"}
@@ -380,7 +383,7 @@ export function MiddleBarProfile() {
                   gap={2}
                 >
                   {data
-                    ?.filter((thread) => thread.user.id === userId)
+                    ?.filter((thread) => thread.author.id === authorId)
                     ?.slice()
                     .reverse()
                     ?.map((thread) => {

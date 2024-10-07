@@ -6,7 +6,7 @@ export interface ThreadEntity {
   image: string;
   likesCount: number;
   repliesCount: number;
-  user: UserEntity;
+  author: UserEntity;
   createdAt: Date;
   updatedAt: Date;
 }

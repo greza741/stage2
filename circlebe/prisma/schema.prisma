@@ -15,23 +15,42 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  fullname String?
-  username String   @unique
-  password String
-  bio      String?
-  profile  String?  @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTteR5C7aU0L5LtNt8c026L5kGCk4H6dy56Cw&s")
-  bgImage  String?  @default("https://c.files.bbci.co.uk/5DFC/production/_84606042_satan-promo.jpg")
-  role     RoleEnum @default(MEMBER)
-  threads  Thread[]
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  fullname  String?
+  username  String   @unique
+  password  String
+  bio       String?
+  profile   String?  @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTteR5C7aU0L5LtNt8c026L5kGCk4H6dy56Cw&s")
+  bgImage   String?  @default("https://c.files.bbci.co.uk/5DFC/production/_84606042_satan-promo.jpg")
+  role      RoleEnum @default(MEMBER)
+  following Follow[] @relation("Following")
+  followers Follow[] @relation("Followers")
 
+  threads Thread[]
   like    Like[]
+  reply   Reply[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("users") // for Rename
+}
+
+model Follow {
+  id         Int  @id @default(autoincrement())
+  followerId Int
+  follower   User @relation("Followers", fields: [followerId], references: [id], onDelete: Cascade)
+
+  followingId Int
+  following   User @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  isFollowing Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@unique([followerId, followingId])
+  @@map("follow")
 }
 
 model Thread {
@@ -40,10 +59,11 @@ model Thread {
   image        String?
   likesCount   Int     @default(0)
   repliesCount Int     @default(0)
-  user         User    @relation(fields: [userId], references: [id])
-  userId       Int
+  author       User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId     Int
 
-  Like        Like[]
+  like  Like[]
+  reply Reply[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -51,17 +71,36 @@ model Thread {
   @@map("threads")
 }
 
-model Like {
-  id        Int @id @default(autoincrement())
-  userId    Int 
-  threadId  Int
+model Reply {
+  id           Int     @id @default(autoincrement())
+  content      String?
+  image        String?
+  likesCount   Int?    @default(0)
+  repliesCount Int?    @default(0)
 
-  user      User  @relation(fields: [userId], references: [id])
-  thread    Thread  @relation(fields: [threadId],references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  threadId Int
+  thread   Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  authorId Int
+  author   User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@map("reply")
+}
+
+model Like {
+  id       Int @id @default(autoincrement())
+  userId   Int
+  threadId Int
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  thread Thread @relation(fields: [threadId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
 
-  @@unique([userId,threadId])
+  @@unique([userId, threadId])
   @@map("like")
 }
 

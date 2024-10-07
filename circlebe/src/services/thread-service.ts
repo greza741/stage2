@@ -8,18 +8,18 @@ class ThreadServices {
   async getAllThreads(): Promise<Thread[]> {
     return await prisma.thread.findMany({
       include: {
-        user: true
-      }
+        author: true,
+      },
     });
   }
   async getUserThread(user: User): Promise<Thread[]> {
     return await prisma.thread.findMany({
       where: {
-        userId: user.id
+        authorId: user.id,
       },
       include: {
-        user: true
-      }
+        author: true,
+      },
     });
   }
 
@@ -27,6 +27,9 @@ class ThreadServices {
     const thread = await prisma.thread.findUnique({
       where: {
         id: id,
+      },
+      include: {
+        like: true,
       },
     });
     if (!thread) {
@@ -39,19 +42,22 @@ class ThreadServices {
     return thread;
   }
 
-  async createThread(data: CreateThreadDTO, user: User): Promise<Thread | null> {
-    if(!user) {
+  async createThread(
+    data: CreateThreadDTO,
+    user: User
+  ): Promise<Thread | null> {
+    if (!user) {
       throw {
         code: CustomErrorCode.USER_NOT_EXISTS,
         message: "User not found!",
         status: 404,
       } as CustomError;
     }
-    
+
     return await prisma.thread.create({
       data: {
         ...data,
-        userId: user.id,
+        authorId: user.id,
       },
     });
   }
@@ -59,7 +65,7 @@ class ThreadServices {
   async updateThread(data: UpdateThreadDTO): Promise<Thread | null> {
     const thread = await prisma.thread.findUnique({
       where: {
-        id: data.id
+        id: data.id,
       },
     });
 

@@ -11,10 +11,10 @@ import {
 } from "@chakra-ui/react";
 import { formatDistanceToNow } from "date-fns";
 import { BiCommentDetail } from "react-icons/bi";
-import { IoIosHeartEmpty } from "react-icons/io";
-import { Form } from "react-router-dom";
-import HorizontalLine from "./horizontal-line";
 import { LuImage } from "react-icons/lu";
+import { Form } from "react-router-dom";
+import LikeButtonPost from "../button/like";
+import HorizontalLine from "./horizontal-line";
 
 export function MiddleBarHome() {
   const {
@@ -120,7 +120,7 @@ export function MiddleBarHome() {
                     height="40px"
                   >
                     <Avatar
-                      src={thread.user.profile}
+                      src={thread.author.profile}
                       objectFit="cover"
                       width="100%"
                       height="100%"
@@ -129,8 +129,8 @@ export function MiddleBarHome() {
                   <Box paddingLeft={"25px"} flex={2}>
                     <Box>
                       <Stack direction={`row`}>
-                        <Text fontWeight={1000}>{thread.user.fullname} </Text>
-                        <Text fontWeight={1}>@{thread.user.username}</Text>
+                        <Text fontWeight={1000}>{thread.author.fullname} </Text>
+                        <Text fontWeight={1}>@{thread.author.username}</Text>
                         <Text fontWeight={1}>•</Text>
                         <Text fontWeight={1}>
                           {formatDistanceToNow(createdAtDate, {
@@ -156,8 +156,7 @@ export function MiddleBarHome() {
                           flexDirection={"row"}
                           alignItems="center"
                         >
-                          <IoIosHeartEmpty size={"20px"} />
-                          <input type="button" />
+                           <LikeButtonPost threadId={thread.id} />
                           <Text fontWeight={1} paddingLeft={"10px"}>
                             {thread.likesCount}
                           </Text>

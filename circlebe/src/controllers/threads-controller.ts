@@ -49,13 +49,15 @@ class ThreadController {
     */
     try {
       const user = (req as any).user;
-      const image = await  cloudinaryService.uploadSingle(req.file as Express.Multer.File)
+      const image = await cloudinaryService.uploadSingle(
+        req.file as Express.Multer.File
+      );
 
       const body = {
         ...req.body,
-        image: image.secure_url
-      }
-      
+        image: image.secure_url,
+      };
+
       const value = await createThreadSchema.validateAsync(body);
 
       const threads = await threadService.createThread(value, user);
