@@ -9,7 +9,8 @@
   ],
   "routes": [
       {
-        "source": "/(.*)", "destination": "/" 
+          "src": "/(.*)",
+          "dest": "src/index.ts"
       }
   ]
 }
