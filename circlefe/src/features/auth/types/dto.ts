@@ -1,4 +1,4 @@
-import { UserEntity } from "@/entities/user";
+import { UserEntity } from "@/entities/user-entity";
 
 export type LoginRequestDTO = {
   email: string;
@@ -7,7 +7,7 @@ export type LoginRequestDTO = {
 
 export type LoginResponseDTO = {
   user: UserEntity;
-  token: string
+  token: string;
 };
 
 export type RegisterRequestDTO = {
@@ -17,14 +17,16 @@ export type RegisterRequestDTO = {
   password: string;
 };
 
-export type RegisterResponseDTO = LoginResponseDTO
+export type RegisterResponseDTO = LoginResponseDTO;
 
-export type UserStoreDTO = Omit<UserEntity, "password">
+export type UserStoreDTO = Omit<UserEntity, "password">;
 
 export type ProfileDTO = {
   fullname: string;
   username: string;
   bio: string;
+  followers: number;
+  following: number;
   // profile: string;
   // bgImage: string;
-}
+};

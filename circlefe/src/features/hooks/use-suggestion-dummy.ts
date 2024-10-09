@@ -1,4 +1,4 @@
-import { UserEntity } from "@/entities/user";
+import { UserEntity } from "@/entities/user-entity";
 import { apiv2 } from "@/libs/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
@@ -26,7 +26,6 @@ export function useSuggestion2() {
     queryKey: ["suggestion2"],
     queryFn: getSuggestion2,
   });
-
 
   return {
     register,

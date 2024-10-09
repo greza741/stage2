@@ -5,7 +5,7 @@ export interface RequestLike {
   threadId: number;
 }
 
-export interface RequestLikeWithUser extends Request {
+export interface RequestWithUser extends Request {
   user?: any;
   file?: Express.Multer.File;
 }

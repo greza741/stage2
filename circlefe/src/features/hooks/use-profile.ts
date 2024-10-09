@@ -1,4 +1,4 @@
-import { UserEntity } from "@/entities/user";
+import { UserEntity } from "@/entities/user-entity";
 import { apiv1 } from "@/libs/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -17,15 +17,12 @@ export function useProfile() {
   });
 
   async function getProfile() {
-    const response = await apiv1.get<null, { data: UserEntity }>(
-      "/users/id",
-      {
-        headers: {
-           Authorization: `Bearer ${Cookies.get("token")}`,
-          "ngrok-skip-browser-warning": "true",
-        },
-      }
-    );
+    const response = await apiv1.get<null, { data: UserEntity }>("/users/id", {
+      headers: {
+        Authorization: `Bearer ${Cookies.get("token")}`,
+        "ngrok-skip-browser-warning": "true",
+      },
+    });
     return response.data;
   }
 
@@ -37,43 +34,43 @@ export function useProfile() {
   const queryClient = useQueryClient();
 
   async function editProfile(data: ProfileDTO) {
-const formData = new FormData()
-formData.append("fullname", data.fullname)
-formData.append("username", data.username)
-formData.append("bio", data.bio)
-// formData.append("profile", data.profile)
-// formData.append("bgImage", data.bgImage)
+    const formData = new FormData();
+    formData.append("fullname", data.fullname);
+    formData.append("username", data.username);
+    formData.append("bio", data.bio);
+    // formData.append("profile", data.profile)
+    // formData.append("bgImage", data.bgImage)
     const response = await apiv1.put<null, { data: UserStoreDTO }>(
       "/users",
       formData,
-      {headers:{
-        Authorization: `Bearer ${Cookies.get("token")}`
-      }}
+      {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      }
     );
-    
+
     queryClient.invalidateQueries({ queryKey: ["user"] });
-    
+
     return response.data;
-    
   }
-  
+
   const { mutateAsync: ProfileAsync } = useMutation<
-  UserStoreDTO,
-  Error,
-  ProfileDTO
+    UserStoreDTO,
+    Error,
+    ProfileDTO
   >({
     mutationKey: ["editProfile"],
     mutationFn: editProfile,
   });
-  
+
   async function onSubmit(data: CreateProfileFormInputs) {
     try {
       await ProfileAsync(data);
-      
-  }catch (error) {
-    console.error("Failed to edit profile:", error);
+    } catch (error) {
+      console.error("Failed to edit profile:", error);
+    }
   }
-}
 
   return {
     register,

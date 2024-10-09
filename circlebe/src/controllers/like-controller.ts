@@ -1,11 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import { Response } from "express";
-import { RequestLikeWithUser } from "../types/like";
+import { RequestWithUser } from "../types/like";
 
 const prisma = new PrismaClient();
 
 class likeController {
-  async getLikes(req: RequestLikeWithUser, res: Response) {
+  async getLikes(req: RequestWithUser, res: Response) {
     const threadId = parseInt(req.params.threadId);
     const userId = req.user.id;
     const thread = await prisma.thread.findUnique({
@@ -24,7 +24,7 @@ class likeController {
     res.json({ isLiked, likesCount });
   }
 
-  async likePost(req: RequestLikeWithUser, res: Response) {
+  async likePost(req: RequestWithUser, res: Response) {
     const threadId = parseInt(req.params.threadId);
     const userId = req.user.id;
     const checkLike = await prisma.like.findUnique({

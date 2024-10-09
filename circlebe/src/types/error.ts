@@ -7,4 +7,5 @@ export type CustomError = {
 export enum CustomErrorCode {
   USER_NOT_EXISTS = "USER_NOT_EXISTS",
   POST_NOT_FOUND = "POST_NOT_FOUND",
+  REPLY_NOT_FOUND = "REPLY_NOT_FOUND",
 }

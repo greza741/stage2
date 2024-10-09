@@ -14,19 +14,21 @@ class UserServices {
     const user = await prisma.user.findUnique({
       where: {
         id: userId,
-      }, 
+      },
       select: {
         fullname: true,
         username: true,
         bio: true,
         bgImage: true,
+        followers: true,
+        following: true,
         profile: true,
         createdAt: true,
         updatedAt: true,
         email: true,
         id: true,
-        role: true
-      }
+        role: true,
+      },
     });
     if (!user) {
       throw {
@@ -53,7 +55,12 @@ class UserServices {
   async updateUser(
     data: UpdateUserDTO,
     userId: number
-  ): Promise<{user: Pick<User, "fullname" | "username" | "bio" | "id" | "profile" | "bgImage"> } > {
+  ): Promise<{
+    user: Pick<
+      User,
+      "fullname" | "username" | "bio" | "id" | "profile" | "bgImage"
+    >;
+  }> {
     const user = await prisma.user.findUnique({
       where: {
         id: userId,
@@ -90,16 +97,16 @@ class UserServices {
     const updateUser = await prisma.user.update({
       where: { id: userId },
       data: updatedData,
-      select:{
+      select: {
         id: true,
         fullname: true,
         username: true,
         bio: true,
         profile: true,
-        bgImage: true
-      }
+        bgImage: true,
+      },
     });
-    return {user: updateUser}
+    return { user: updateUser };
   }
 
   async deleteUser(id: number): Promise<User | null> {

@@ -6,11 +6,14 @@ import { authentication } from "../middlewares/authentication";
 import { authorize } from "../middlewares/authorization";
 import { uploadDisk } from "../middlewares/upload-file";
 import likeController from "../controllers/like-controller";
+import { searchController } from "../controllers/search-controller";
+import followController from "../controllers/follow-controller";
+import replyController from "../controllers/reply-controller";
 
 export const routerV1 = express.Router();
 
 routerV1.get("/users", authentication, userController.find);
-routerV1.get("/users/id", authentication, userController.findById);
+routerV1.get("/users/:id", authentication, userController.findById);
 routerV1.get("/users/email/:email", userController.findByEmail);
 routerV1.post("/users", userController.create);
 routerV1.put(
@@ -43,6 +46,33 @@ routerV1.post(
   likeController.likePost
 );
 routerV1.get("/thread/:threadId/like", authentication, likeController.getLikes);
+
+// Search
+routerV1.get("/search", authentication, searchController);
+
+// Follows
+routerV1.get(
+  "/follow/:userId",
+  authentication,
+  followController.checkFollowStatus
+);
+routerV1.patch(
+  "/follow/:userId",
+  authentication,
+  followController.toggleFollow
+);
+
+// reply
+routerV1.get(
+  "/thread/:threadId/reply",
+  authentication,
+  replyController.getReplyByPost
+);
+routerV1.post(
+  "/thread/:threadId/reply",
+  authentication,
+  replyController.createReply
+);
 
 // routerV1.get("/profile", authentication, profileController)
 

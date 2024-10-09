@@ -76,9 +76,7 @@ export function MiddleBarHome() {
                 </p>
               )}
               <label>
-                <LuImage 
-                size={40}
-                />
+                <LuImage size={40} />
                 <input
                   {...register("image")}
                   type="file"
@@ -144,24 +142,24 @@ export function MiddleBarHome() {
                         src={thread.image}
                         width={"300px"}
                         height={"300px"}
-                        objectFit={"cover"}
+                        objectFit={"contain"}
                       />
                       <Text>{thread.content}</Text>
                     </Box>
                     <Box paddingTop={"10px"}>
                       <Stack direction={`row`} alignItems="center">
                         <label>
-                        <Box
-                          display={"flex"}
-                          flexDirection={"row"}
-                          alignItems="center"
-                        >
-                           <LikeButtonPost threadId={thread.id} />
-                          <Text fontWeight={1} paddingLeft={"10px"}>
-                            {thread.likesCount}
-                          </Text>
-                        </Box>
-                          </label>  
+                          <Box
+                            display={"flex"}
+                            flexDirection={"row"}
+                            alignItems="center"
+                          >
+                            <LikeButtonPost threadId={thread.id} />
+                            <Text fontWeight={1} paddingLeft={"10px"}>
+                              {thread.likesCount}
+                            </Text>
+                          </Box>
+                        </label>
                         <Box
                           display={"flex"}
                           flexDirection={"row"}

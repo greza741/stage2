@@ -1,4 +1,4 @@
-import { ThreadEntity } from "@/entities/thread";
+import { ThreadEntity } from "@/entities/thread-entity";
 import { apiv1 } from "@/libs/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -38,10 +38,10 @@ export function useHome() {
   const queryClient = useQueryClient();
 
   async function createThread(data: CreateThreadDTO) {
-const formData = new FormData()
-formData.append("content", data.content)
-formData.append("image", data.image[0])
-    
+    const formData = new FormData();
+    formData.append("content", data.content);
+    formData.append("image", data.image[0]);
+
     const response = await apiv1.post<null, { data: ThreadEntity }>(
       "/threads",
       formData

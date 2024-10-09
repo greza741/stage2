@@ -10,6 +10,9 @@ class ThreadServices {
       include: {
         author: true,
       },
+      orderBy: {
+        createdAt: "asc",
+      },
     });
   }
   async getUserThread(user: User): Promise<Thread[]> {
