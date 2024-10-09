@@ -16,7 +16,6 @@ routerV1.get("/users", authentication, userController.find);
 routerV1.get("/users/:id", authentication, userController.findById);
 routerV1.get("/users/email/:email", userController.findByEmail);
 routerV1.post("/users", userController.create);
-routerV1.get("/users", userController.create);
 routerV1.put(
   "/users",
   authentication,
