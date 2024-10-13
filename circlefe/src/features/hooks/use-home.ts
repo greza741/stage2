@@ -2,6 +2,7 @@ import { ThreadEntity } from "@/entities/thread-entity";
 import { apiv1 } from "@/libs/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Cookies from "js-cookie";
 import { useForm } from "react-hook-form";
 import {
   CreateThreadFormInputs,
@@ -23,7 +24,7 @@ export function useHome() {
       "/threads",
       {
         headers: {
-          "ngrok-skip-browser-warning": "true",
+          Authorization: `Bearer ${Cookies.get("token")}`,
         },
       }
     );

@@ -20,8 +20,7 @@ export function AppRouter() {
     },
     {
       element: <ProtectedRoutes />,
-      children: [
-      ],
+      children: [],
     },
     {
       path: "/",

@@ -61,6 +61,7 @@ routerV1.patch(
   authentication,
   followController.toggleFollow
 );
+routerV1.get("/follow", authentication, followController.followList);
 
 // reply
 routerV1.get(

@@ -11,7 +11,7 @@ class ThreadServices {
         author: true,
       },
       orderBy: {
-        createdAt: "asc",
+        createdAt: "desc",
       },
     });
   }

@@ -1,31 +1,14 @@
 import { useHome } from "@/features/hooks/use-home";
 import { useAppSelector } from "@/hooks/use-store";
-import {
-  Avatar,
-  Box,
-  Button,
-  Image,
-  Input,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
-import { formatDistanceToNow } from "date-fns";
-import { BiCommentDetail } from "react-icons/bi";
+import { Avatar, Box, Button, Input, Text } from "@chakra-ui/react";
 import { LuImage } from "react-icons/lu";
 import { Form } from "react-router-dom";
-import LikeButtonPost from "../button/like";
+import { ThreadMap } from "./homeComp/thread-map";
 import HorizontalLine from "./horizontal-line";
 
 export function MiddleBarHome() {
-  const {
-    register,
-    handleSubmit,
-    errors,
-    isSubmitting,
-    onSubmit,
-    data,
-    isLoading,
-  } = useHome();
+  const { register, handleSubmit, errors, isSubmitting, onSubmit, isLoading } =
+    useHome();
   const { profile } = useAppSelector((state) => state.auth);
 
   if (isLoading) return <h1>Loading...</h1>;
@@ -103,82 +86,7 @@ export function MiddleBarHome() {
           </Form>
         </Box>
         <HorizontalLine />
-        {data
-          ?.slice()
-          .reverse()
-          .map((thread) => {
-            const createdAtDate = new Date(thread.createdAt);
-            return (
-              <Box key={thread.id}>
-                <Box paddingLeft={"20px"} display={"flex"} flexDir={"row"}>
-                  <Box
-                    borderRadius="full"
-                    overflow="hidden"
-                    width="40px"
-                    height="40px"
-                  >
-                    <Avatar
-                      src={thread.author.profile}
-                      objectFit="cover"
-                      width="100%"
-                      height="100%"
-                    />
-                  </Box>
-                  <Box paddingLeft={"25px"} flex={2}>
-                    <Box>
-                      <Stack direction={`row`}>
-                        <Text fontWeight={1000}>{thread.author.fullname} </Text>
-                        <Text fontWeight={1}>@{thread.author.username}</Text>
-                        <Text fontWeight={1}>•</Text>
-                        <Text fontWeight={1}>
-                          {formatDistanceToNow(createdAtDate, {
-                            addSuffix: true,
-                          })}
-                        </Text>
-                      </Stack>
-                    </Box>
-                    <Box paddingTop={"10px"}>
-                      <Image
-                        src={thread.image}
-                        width={"300px"}
-                        height={"300px"}
-                        objectFit={"contain"}
-                      />
-                      <Text>{thread.content}</Text>
-                    </Box>
-                    <Box paddingTop={"10px"}>
-                      <Stack direction={`row`} alignItems="center">
-                        <label>
-                          <Box
-                            display={"flex"}
-                            flexDirection={"row"}
-                            alignItems="center"
-                          >
-                            <LikeButtonPost threadId={thread.id} />
-                            <Text fontWeight={1} paddingLeft={"10px"}>
-                              {thread.likesCount}
-                            </Text>
-                          </Box>
-                        </label>
-                        <Box
-                          display={"flex"}
-                          flexDirection={"row"}
-                          alignItems="center"
-                          paddingLeft={"20px"}
-                        >
-                          <BiCommentDetail size={"20px"} />
-                          <Text fontWeight={1} paddingLeft={"10px"}>
-                            {thread.repliesCount} Replies
-                          </Text>
-                        </Box>
-                      </Stack>
-                    </Box>
-                  </Box>
-                </Box>
-                <HorizontalLine />
-              </Box>
-            );
-          })}
+        <ThreadMap />
       </Box>
     </Box>
   );

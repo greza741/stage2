@@ -24,6 +24,12 @@ class FollowController {
     );
     return res.json(followStatus);
   }
+
+  async followList(req: RequestWithUser, res: Response) {
+    const userId = req.user.id;
+    const followList = await followService.followList(userId);
+    return res.json(followList);
+  }
 }
 
 export default new FollowController();

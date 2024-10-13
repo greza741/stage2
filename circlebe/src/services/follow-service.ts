@@ -37,6 +37,42 @@ class followService {
     });
     return { isFollowing: follow ? true : false };
   }
+
+  async followList(currentUserId: number) {
+    const following = await prisma.follow.findMany({
+      where: {
+        followingId: currentUserId,
+      },
+      include: {
+        follower: {
+          select: {
+            id: true,
+            username: true,
+            fullname: true,
+            bio: true,
+            profile: true,
+          },
+        },
+      },
+    });
+    const follower = await prisma.follow.findMany({
+      where: {
+        followerId: currentUserId,
+      },
+      include: {
+        following: {
+          select: {
+            id: true,
+            username: true,
+            fullname: true,
+            bio: true,
+            profile: true,
+          },
+        },
+      },
+    });
+    return { follower, following };
+  }
 }
 
 export default new followService();

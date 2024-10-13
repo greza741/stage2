@@ -1,56 +1,24 @@
-import {
-  Box,
-  Flex,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  Text,
-} from "@chakra-ui/react";
-import { RiUserSearchFill } from "react-icons/ri";
+import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import { Following } from "./followComp/following";
+import { Follower } from "./followComp/followers";
 
 export function MiddleBarFollow() {
   return (
-    <Box>
-      <Box
-        backgroundColor={"brand.background"}
-        color={"white"}
-        minHeight={"100vh"}
-        borderRight={"1px solid grey"}
-        padding={"0px 20px"}
-      >
-        <Flex h="20" alignItems="center">
-          <InputGroup borderRadius={"20px"}>
-            <InputLeftAddon
-              borderLeftRadius={"20px"}
-              backgroundColor={"#3F3F3F"}
-            >
-              <RiUserSearchFill />
-            </InputLeftAddon>
-            <Input
-              borderRightRadius={"20px"}
-              backgroundColor={"#3F3F3F"}
-              type="search"
-              placeholder="Search"
-            />
-          </InputGroup>
-        </Flex>
-        <Box
-          w={"100%"}
-          h={"100vh"}
-          backgroundColor={""}
-          display={"flex"}
-          alignItems={"center"}
-          justifyContent={"center"}
-          flexDirection={"column"}
-        >
-          <Box>
-            <Text>No result for "X"</Text>
-          </Box>
-          <Box>
-            <Text color={"grey"}>Try searching for something else</Text>
-          </Box>
-        </Box>
-      </Box>
+    <Box backgroundColor={"brand.background"} h={"100%"} color={"white"}>
+      <Tabs isFitted variant="enclosed" m={"1px"}>
+        <TabList mb="1em">
+          <Tab>Following</Tab>
+          <Tab>Followers</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <Following />
+          </TabPanel>
+          <TabPanel>
+            <Follower />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </Box>
   );
 }
