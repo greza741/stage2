@@ -20,27 +20,28 @@ export function AppRouter() {
     },
     {
       element: <ProtectedRoutes />,
-      children: [],
-    },
-    {
-      path: "/",
-      element: <HomeRoute />,
-    },
-    {
-      path: "/profile",
-      element: <ProfileRoute />,
-    },
-    {
-      path: "/search",
-      element: <SearchRoute />,
-    },
-    {
-      path: "/follow",
-      element: <FollowRoute />,
-    },
-    {
-      path: "/suggestion2",
-      element: <Suggestion2 />,
+      children: [
+        {
+          path: "/",
+          element: <HomeRoute />,
+        },
+        {
+          path: "/profile",
+          element: <ProfileRoute />,
+        },
+        {
+          path: "/search",
+          element: <SearchRoute />,
+        },
+        {
+          path: "/follow",
+          element: <FollowRoute />,
+        },
+        {
+          path: "/suggestion2",
+          element: <Suggestion2 />,
+        },
+      ],
     },
   ]);
 

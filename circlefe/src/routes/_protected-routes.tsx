@@ -20,7 +20,7 @@ export function ProtectedRoutes() {
   }
 
   if (userLogin === "MEMBER") {
-    return <Outlet />;
+    return <Navigate to={"/login"} />;
   }
-  return <Navigate to={"/login"} />;
+  return <Outlet />;
 }
